@@ -24,5 +24,6 @@ var config = {
         artistColor: '',
         albumColor: '',
         albumArtCornerRadius: 24,
+        albumArtRotation: '5', // Rotation (in degrees) of the album art on the Y axis
     }
 }

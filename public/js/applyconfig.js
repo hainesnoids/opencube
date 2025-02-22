@@ -29,3 +29,5 @@ document.getElementById('cover_art').style.borderRadius = `${config.details.albu
 document.getElementById('title').style.color = config.details.trackColor == '' ? config.accentColor : config.details.trackColor;
 document.getElementById('artist').style.color = config.details.artistColor == '' ? config.accentColor : config.details.artistColor;
 document.getElementById('album').style.color = config.details.albumColor == '' ? config.accentColor : config.details.albumColor;
+
+document.getElementById('cover_art').style.transform = `rotateY(${config.details.albumArtRotation}deg);`
