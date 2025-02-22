@@ -84,13 +84,11 @@ canvas {
     font-style: italic;
 }
 #cover_art {
-    width: 512px;
-    height: 512px;
-    position: absolute;
-    top: 284px;
-    left: 150px;
+    width: 100%;
+    height: 100%;
     border-radius: 32px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    transform: rotateY(5deg);
 }
 #title {
     position: absolute;
@@ -139,4 +137,12 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+#art_wrapper {
+    perspective: 512px;
+    width: 512px;
+    height: 512px;
+    position: absolute;
+    top: 284px;
+    left: 150px;
 }
