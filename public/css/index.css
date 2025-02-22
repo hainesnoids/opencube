@@ -79,16 +79,6 @@ canvas {
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
-#progress-border {
-    width: calc(100% - 16px);
-    height: calc(100% - 16px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    border: 0px solid #ffffff;
-    border-radius: 24px;
-}
 .metadata-itm {
     z-index: 7;
     font-family: Arial, Helvetica, sans-serif;
