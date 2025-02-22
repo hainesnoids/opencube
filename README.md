@@ -19,7 +19,8 @@ Open `/public/playlist.js`, and copy one of the list items to the end of the arr
 2. Rename it to the **exact name** of the album as defined in the song playlist. **This is case sensitive.**
 
 ## Customizing Colors
-Open index.html in a text editor, open your text editor's "Find and Replace" menu, search for `#ffffff` (no case sensitivity), and replace it with whatever accent color you choose (in hexidecimal). 
+1. Open `css/index.css` in a text editor, open your text editor's "Find and Replace" menu, search for `#ffffff` (no case sensitivity), and replace it with whatever accent color you choose (in hexidecimal).
+2. Open `js/index.js` in a text editor, open your text editor's "Find and Replace" menu, search for `#ffffff` (no case sensitivity), and replace it with whatever accent color you choose (in hexidecimal).
 > There is support for gradients in the visualizer, however I won't tell you how.
 
 ##  Video Background
