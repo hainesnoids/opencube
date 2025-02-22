@@ -3,7 +3,7 @@
              * Author:Wayou
              * License: MIT
              * Feb 15, 2014
-             */
+*/
 
 var idx = 0
             
@@ -16,20 +16,13 @@ function start() {
     Visualizer.prototype._start();
 }
 
-function getDuration(src, cb) {
-    var audio = new Audio();
-    $(audio).on("loadedmetadata", function(){
-        return audio.duration;
-    });
-}
-
-async function pregressBar() { // worlds best function name
+async function pregressBar() {
     const progress = document.getElementById('progress');
     var buffer = audioBufferSouceNode.buffer;
     proglength = buffer.duration;
     var i = 0
     function updateProgress() {
-        i = i + 0.5
+        i = i + 0.2
         progress.style.width = (i / proglength) * 100 + '%'; // Convert to percentage
         if (i >= Math.floor(proglength)) {
             clearInterval(intervalId);
@@ -41,21 +34,25 @@ async function pregressBar() { // worlds best function name
         document.getElementById('clock').innerText = `${Math.floor(i / 60)}:${(Math.floor(i) % 60).toString().padStart(2,'0')}`
         document.getElementById('clock_neg').innerText = `-${Math.floor(timeLeft / 60)}:${(Math.floor(timeLeft) % 60).toString().padStart(2, '0')}`;
     }
-    const intervalId = setInterval(updateProgress, 500);
+    const intervalId = setInterval(updateProgress, 200);
 }
 
-async function songQueue() {
-    songCount = 29
-    var songs
-
+function shuffle() {
     shuffled = songs // shuffle songs
     .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
+}
+
+async function songQueue() {
+    songCount = songs.length;
+
+    shuffle();
 
     Visualizer.file = shuffled[0].url;
     Visualizer.fileName = "automatic playback enabled"
     setMetadata(shuffled[idx]);
+    idx = 1;
     Visualizer.status = 1;
     Visualizer.prototype._start;
     await function() {
@@ -73,6 +70,7 @@ async function songQueue() {
 async function nextSong() {
     idx++ // increase song index by 1
     if (idx > songCount) {
+        shuffle(); // re-shuffle songs when current list reaches the end
         idx = 1
     }
     Visualizer.file = shuffled[idx].url;
@@ -251,18 +249,19 @@ Visualizer.prototype = {
         var that = this,
             canvas = document.getElementById('canvas'),
             cwidth = canvas.width,
-            cheight = canvas.height - 2,
-            meterWidth = 12, //width of the meters in the spectrum
-            gap = 12, //gap between meters
-            capHeight = 2,
-            capStyle = '#00000000',
-            meterNum = 1440 / (12 + 12), //count of the meters
+            cheight = canvas.height,
+            meterWidth = config.visualizer.meterWidth, //width of the meters in the spectrum
+            gap = config.visualizer.meterGap, //gap between meters
+            nextMeter = meterWidth + gap,
+            capHeight = config.visualizer.capHeight,
+            capStyle = newConfig.capStyle,
+            meterNum = cwidth / (meterWidth + gap), //count of the meters
             capYPositionArray = []; ////store the vertical position of hte caps for the preivous frame
         ctx = canvas.getContext('2d'),
         gradient = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient.addColorStop(1, '#ffffff');
-        gradient.addColorStop(0.5, '#ffffff');
-        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(config.visualizer.color[0].position, config.visualizer.color[0].color);
+        gradient.addColorStop(config.visualizer.color[1].position, config.visualizer.color[1].color);
+        gradient.addColorStop(config.visualizer.color[2].position, config.visualizer.color[2].color);
         var drawMeter = function() {
             var array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
@@ -290,20 +289,20 @@ Visualizer.prototype = {
                 ctx.fillStyle = capStyle;
                 //draw the cap, with transition effect
                 if (value < capYPositionArray[i]) {
-                    ctx.fillRect(i * 12, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
+                    ctx.fillRect(i * nextMeter, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
                 } else {
-                    ctx.fillRect(i * 12, cheight - value, meterWidth, capHeight);
+                    ctx.fillRect(i * nextMeter, cheight - value, meterWidth, capHeight);
                     capYPositionArray[i] = value;
                 };
                 ctx.fillStyle = gradient; //set the filllStyle to gradient for a better look
-                ctx.fillRect(i * 24 /*meterWidth+gap*/ , cheight - value + capHeight, meterWidth, cheight); //the meter
+                ctx.fillRect(i * nextMeter, cheight - value + capHeight, meterWidth, cheight); //the meter
                 /*
                 ctx.beginPath();
-                ctx.arc(i * 24 + meterWidth / 2, cheight - value + capHeight + meterWidth / 2, meterWidth / 2, 0, Math.PI * 2);
+                ctx.arc(i * nextMeter + meterWidth / 2, cheight - value + capHeight + meterWidth / 2, meterWidth / 2, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.beginPath();
-                ctx.arc(i * 24 + meterWidth / 2, cheight - value - meterWidth / 2 + (meterWidth / 2), meterWidth / 2, 0, Math.PI * 2);
+                ctx.arc(i * nextMeter + meterWidth / 2, cheight - value - meterWidth / 2 + (meterWidth / 2), meterWidth / 2, 0, Math.PI * 2);
                 ctx.fill();
                 */
             }

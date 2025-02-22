@@ -1,0 +1,28 @@
+var config = {
+    accentColor: "#ffffff", // Player Accent Color
+    visualizer: {
+        color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
+            {color: "#aaaaaa99", position: 0},
+            {color: "#d5d5d5c6", position: 0.5},
+            {color: "#fffffff2", position: 1}
+        ],
+        meterWidth: 12, // Width of Meters (in pixels) for the Visualizer
+        meterGap: 12, // Gap Between Meters
+        caps: false, // Add caps to the tops of the visualizer, which slowly fall down when music gets quieter
+        capColor: "#ffffff",
+        capHeight: 2, // Height of the caps (in pixels)
+    },
+    background: {
+        type: "video", // Type of background to use (video, image)
+        url: "/images/background.mp4", // Link to video or image to use as the background
+    },
+    progressBar: {
+        glow: false, // Add a glow effect to the progress bar, which matches the accent color.
+    },
+    details: { // Song Details
+        trackColor: '',
+        artistColor: '',
+        albumColor: '',
+        albumArtCornerRadius: 24,
+    }
+}

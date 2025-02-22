@@ -1,6 +1,6 @@
 {
   "name": "OpenCube",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Web-based media player for 24/7 music streams and such",
   "scripts": {
     "mrrp": "echo mraow",
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Hainesnoids",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "dependencies": {
     "http-server": "*"
   }
