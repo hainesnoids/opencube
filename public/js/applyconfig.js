@@ -18,10 +18,10 @@ if (config.background.type == "video") {
 
 document.documentElement.style.setProperty("--accent-color", config.accentColor);
 
-if (config.progressBar.glow == "true") {
-    document.getElementById('progress').style.boxShadow = "0px 0px 10px 0px var(--accent-color);"
+if (config.progressBar.glow == true) {
+    document.getElementById('progress').style.boxShadow = "0px 0px 10px 0px var(--accent-color)"
 } else {
-    document.getElementById('progress').style.boxShadow = "none;"
+    document.getElementById('progress').style.boxShadow = "none"
 }
 
 document.getElementById('cover_art').style.borderRadius = `${config.details.albumArtCornerRadius}px`
@@ -30,4 +30,6 @@ document.getElementById('title').style.color = config.details.trackColor == '' ?
 document.getElementById('artist').style.color = config.details.artistColor == '' ? config.accentColor : config.details.artistColor;
 document.getElementById('album').style.color = config.details.albumColor == '' ? config.accentColor : config.details.albumColor;
 
-document.getElementById('cover_art').style.transform = `rotateY(${config.details.albumArtRotation}deg);`
+document.getElementById('cover_art').style.transform = `rotateY(${config.details.albumArtRotation}deg)`
+document.documentElement.style.setProperty("--def-start", (config.details.albumArtRotation - 180) + 'deg');
+document.documentElement.style.setProperty("--def-end", (config.details.albumArtRotation) + 'deg');

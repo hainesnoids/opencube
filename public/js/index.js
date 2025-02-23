@@ -38,7 +38,13 @@ async function pregressBar() {
 }
 
 function shufflePlaylist() {
-    shuffled = shuffle(songs)
+    shuffled = shuffle(songs);
+    /*shuffled.unshift({
+        "name": "test",
+        "artist": "test",
+        "album": "Sample Heaven",
+        "url": "/songs/test.wav"
+    },)*/
 }
 
 async function songQueue() {
@@ -66,7 +72,7 @@ async function songQueue() {
 
 async function nextSong() {
     idx++ // increase song index by 1
-    if (idx > songCount) {
+    if (idx >= songCount) {
         shufflePlaylist(); // re-shuffle songs when current list reaches the end
         idx = 1
     }
@@ -81,7 +87,15 @@ async function setMetadata(data) {
     document.getElementById('title').innerText = data.name;
     document.getElementById('artist').innerText = data.artist;
     document.getElementById('album').innerText = data.album;
-    document.getElementById('cover_art').src = `/images/albums/${data.album}.jpg`;
+    if (data.album != document.getElementById('cover_art').src) {
+        document.getElementById('cover_art').style.animation = "rotateArt 1s cubic-bezier(.37,1.28,.64,1)";
+        setTimeout(function(){document.getElementById('cover_art').src = `/images/albums/${data.album}.jpg`},210);
+        setTimeout(function(){document.getElementById('cover_art').style.animation = ""},1000)
+    } else {
+        console.log(data.album)
+        console.log(document.getElementById('cover_art').src)
+        document.getElementById('cover_art').src = `/images/albums/${data.album}.jpg`;
+    }
 }
 
 var Visualizer = function() {

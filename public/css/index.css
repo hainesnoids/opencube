@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 * {
     /* --accent-color: #ffffff; */
 }
@@ -144,4 +145,21 @@ canvas {
     position: absolute;
     top: 284px;
     left: 150px;
+}
+#hdsblur {
+    position: absolute;
+    bottom: 0;
+    width: 1920px;
+    height: 160px;
+    z-index: 999999;
+    backdrop-filter: blur(10px);
+    background-color: #00000040;
+}
+@keyframes rotateArt {
+    from {
+        transform: rotateY(var(--def-start));
+    }
+    to {
+        transform: rotateY(var(--def-end));
+    }
 }
