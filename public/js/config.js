@@ -1,6 +1,9 @@
 var config = {
     accentColor: '#ffffff', // Player Accent Color
-    font: 'Arial, Helvetica, sans-serif', // Player Font (for fonts from google fonts you'll need to edit index.css)
+    font: {
+        family: 'Arial, Helvetica, sans-serif', // Font Family (for fonts from google fonts you'll need to edit index.css)
+        italic: true, // This one is self-explanitory
+    },
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},
@@ -26,5 +29,6 @@ var config = {
         albumColor: '',
         albumArtCornerRadius: 24,
         albumArtRotation: '10', // Rotation (in degrees) of the album art on the Y axis
+        detailsRotation: '0', // Rotation (in degrees) of the song details, visualizer, and progress bar.
     }
 }

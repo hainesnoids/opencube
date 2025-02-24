@@ -1,13 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
-* {
-    /* --accent-color: #ffffff; */
-}
 textarea {
     resize: none;
 }	
 html, body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     color: var(--accent-color);
     overflow: hidden;
 }
@@ -43,12 +39,7 @@ body {
     left: 0;
     z-index: 2;
     overflow: hidden;
-}
-canvas {
-    position: absolute;
-    top: 378px;
-    left: 690px; /* nice */
-    z-index: 2;
+    perspective: 1024px;
 }
 #fileWrapper{
     transition:all 0.5s ease;
@@ -66,8 +57,8 @@ canvas {
     width: 1080px;
     height: 8px;
     position: absolute;
-    top: 746px;
-    left: 690px; /* nice */
+    top: 462px;
+    left: 0px; /* nice */
     background-color: #00000040;
 }
 #progress {
@@ -81,7 +72,6 @@ canvas {
 }
 .metadata-itm {
     z-index: 7;
-    font-family: Arial, Helvetica, sans-serif;
     font-style: italic;
 }
 #cover_art {
@@ -90,26 +80,39 @@ canvas {
     border-radius: 32px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
+#details_wrapper {
+    width: 1080px;
+    height: 512px;
+    position: absolute;
+    top: 284px;
+    left: 690px;
+}
+canvas {
+    position: absolute;
+    top: 94px;
+    left: 0px; /* nice */
+    z-index: 2;
+}
 #title {
     position: absolute;
-    top: 246px;
-    left: 690px; /* nice */
+    top: -38px;
+    left: 0px; /* nice */
     font-size: 48pt;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
     text-wrap: nowrap;
 }
 #artist {
     position: absolute;
-    top: 330px;
-    left: 690px; /* nice */
+    top: 45px;
+    left: 0px; /* nice */
     font-weight: normal;
     font-size: 28pt;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
 }
 #album {
     position: absolute;
-    top: 376px;
-    left: 690px; /* nice */
+    top: 92px;
+    left: 0px; /* nice */
     font-weight: normal;
     font-size: 28pt;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
@@ -117,16 +120,16 @@ canvas {
 #clock {
     font-size: 24pt;
     position: absolute;
-    top: 715px;
-    left: 688px;
+    top: 431px;
+    left: -2px;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
 }
 
 #clock_neg {
     font-size: 24pt;
     position: absolute;
-    top: 715px;
-    right: 155px;
+    top: 431px;
+    right: 2px;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
     font-weight: normal;
 }
@@ -139,12 +142,12 @@ canvas {
     transform: translate(-50%,-50%);
 }
 #art_wrapper {
-    perspective: 512px;
     width: 512px;
     height: 512px;
     position: absolute;
     top: 284px;
     left: 150px;
+    perspective: 1024px;
 }
 #hdsblur {
     position: absolute;

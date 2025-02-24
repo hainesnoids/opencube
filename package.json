@@ -4,12 +4,14 @@
   "description": "Web-based media player for 24/7 music streams and such",
   "scripts": {
     "mrrp": "echo mraow",
-    "start": "http-server -p8255"
+    "start": "http-server -p8255 ./public"
   },
   "keywords": [],
   "author": "Hainesnoids",
   "license": "MIT",
   "dependencies": {
-    "http-server": "*"
+    "http-server": "*",
+    "music-metadata": "*",
+    "files": "*"
   }
 }
