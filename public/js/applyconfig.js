@@ -33,3 +33,5 @@ document.getElementById('album').style.color = config.details.albumColor == '' ?
 document.getElementById('cover_art').style.transform = `rotateY(${config.details.albumArtRotation}deg)`
 document.documentElement.style.setProperty("--def-start", (config.details.albumArtRotation - 180) + 'deg');
 document.documentElement.style.setProperty("--def-end", (config.details.albumArtRotation) + 'deg');
+
+document.body.style.setProperty('font-family', config.font);
