@@ -28,7 +28,6 @@ async function pregressBar() {
             clearInterval(intervalId);
             Visualizer.prototype._audioEnd();
         }
-        console.log(i)
         progtimestamp = buffer.duration;
         const timeLeft = progtimestamp - i;
         document.getElementById('clock').innerText = `${Math.floor(i / 60)}:${(Math.floor(i) % 60).toString().padStart(2,'0')}`
@@ -63,12 +62,8 @@ async function songQueue() {
 async function nextSong() {
     idx++ // increase song index by 1
     if (idx >= songs.length) {
-        idx = 1
-        Visualizer.file = shuffled[idx].url;
-        Visualizer.status = 1;
-        setMetadata(shuffled[idx]);
-        start() // re-initialize playback when current list reaches the end (cheeky workaround)
-        return 1
+        idx = 1;
+        location = ''
     }
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
