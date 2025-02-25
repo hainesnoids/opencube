@@ -7,7 +7,7 @@ var config = {
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},
-            {color: '#ffffff', position: 0.5},
+            {color: '#ffffff', position: 0.67},
             {color: '#ffffff', position: 1}
         ],
         meterWidth: 12, // Width of Meters (in pixels) for the Visualizer
@@ -17,7 +17,7 @@ var config = {
         capHeight: 2, // Height of the caps (in pixels)
     },
     background: {
-        type: 'video', // Type of background to use (video, image)
+        type: 'video', // Type of background to use (video, image, none)
         url: '/images/background.mp4', // Link to video or image to use as the background
     },
     progressBar: {
@@ -29,6 +29,7 @@ var config = {
         albumColor: '',
         albumArtCornerRadius: 24,
         albumArtRotation: '10', // Rotation (in degrees) of the album art on the Y axis
+        albumArtShadow: true, // Enable Album Art Shadow (MUST HAVE THE LATEST OBS TO WORK)
         detailsRotation: '0', // Rotation (in degrees) of the song details, visualizer, and progress bar.
     }
 }
