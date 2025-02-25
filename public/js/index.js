@@ -58,29 +58,22 @@ async function songQueue() {
     idx = 1;
     Visualizer.status = 1;
     Visualizer.prototype._start;
-    await function() {
-        return new Promise((resolve) => {
-            const checkStatus = setInterval(() => {
-                if (Visualizer.status === 0) {
-                    clearInterval(checkStatus);
-                    resolve();
-                }
-            }, 100);
-        });
-    };
 }
 
 async function nextSong() {
     idx++ // increase song index by 1
-    if (idx >= songCount) {
-        shufflePlaylist(); // re-shuffle songs when current list reaches the end
+    if (idx >= songs.length) {
         idx = 1
+        Visualizer.file = shuffled[idx].url;
+        Visualizer.status = 1;
+        setMetadata(shuffled[idx]);
+        start() // re-initialize playback when current list reaches the end (cheeky workaround)
+        return 1
     }
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
     setMetadata(shuffled[idx]);
-    Visualizer.prototype._prepareAPI();
-    Visualizer.prototype._start();
+    start()
 }
 
 async function setMetadata(data) {
@@ -88,6 +81,12 @@ async function setMetadata(data) {
     document.getElementById('artist').innerText = data.artist;
     document.getElementById('album').innerText = data.album;
     if (data.album != document.getElementById('cover_art').src) {
+        async function doTheSameButForTheShadow() {
+            document.getElementById('cover_art_shadow').style.animation = "rotateArtShadow 1s cubic-bezier(.37,1.28,.64,1)";
+            setTimeout(function(){document.getElementById('cover_art_shadow').src = `/images/albums/${data.album}.jpg`},210);
+            setTimeout(function(){document.getElementById('cover_art_shadow').style.animation = ""},1000)
+        };
+        doTheSameButForTheShadow();
         document.getElementById('cover_art').style.animation = "rotateArt 1s cubic-bezier(.37,1.28,.64,1)";
         setTimeout(function(){document.getElementById('cover_art').src = `/images/albums/${data.album}.jpg`},210);
         setTimeout(function(){document.getElementById('cover_art').style.animation = ""},1000)
