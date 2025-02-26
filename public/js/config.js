@@ -1,9 +1,6 @@
 var config = {
     accentColor: '#ffffff', // Player Accent Color
-    font: {
-        family: 'Arial, Helvetica, sans-serif', // Font Family (for fonts from google fonts you'll need to edit index.css)
-        italic: true, // This one is self-explanitory
-    },
+    theme: 'default', // Theme to Use (default, watt, nemo)
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},

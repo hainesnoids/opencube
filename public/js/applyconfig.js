@@ -32,12 +32,12 @@ if (config.details.albumArtShadow == true) {
     document.getElementById('cover_art_shadow').style.display = "none"
 }
 
-document.getElementById('cover_art').style.borderRadius = `${config.details.albumArtCornerRadius}px`
-document.getElementById('cover_art_shadow').style.borderRadius = `${config.details.albumArtCornerRadius}px`
+// document.getElementById('cover_art').style.borderRadius = `${config.details.albumArtCornerRadius}px`
+// document.getElementById('cover_art_shadow').style.borderRadius = `${config.details.albumArtCornerRadius}px`
 
-document.getElementById('title').style.color = config.details.trackColor == '' ? config.accentColor : config.details.trackColor;
-document.getElementById('artist').style.color = config.details.artistColor == '' ? config.accentColor : config.details.artistColor;
-document.getElementById('album').style.color = config.details.albumColor == '' ? config.accentColor : config.details.albumColor;
+// document.getElementById('title').style.color = config.details.trackColor == '' ? config.accentColor : config.details.trackColor;
+// document.getElementById('artist').style.color = config.details.artistColor == '' ? config.accentColor : config.details.artistColor;
+// document.getElementById('album').style.color = config.details.albumColor == '' ? config.accentColor : config.details.albumColor;
 
 document.getElementById('cover_art').style.transform = `rotateY(${config.details.albumArtRotation}deg)`
 document.getElementById('cover_art_shadow').style.transform = `rotateY(${config.details.albumArtRotation}deg) rotateX(180deg)`
@@ -45,5 +45,12 @@ document.getElementById('details_wrapper').style.transform = `rotateY(${config.d
 document.documentElement.style.setProperty("--def-start", (config.details.albumArtRotation - 180) + 'deg');
 document.documentElement.style.setProperty("--def-end", (config.details.albumArtRotation) + 'deg');
 
-document.body.style.setProperty('font-family', config.font.family);
-document.body.style.setProperty('font-style', config.font.italic == true ? 'italic' : 'normal');
+document.head.innerHTML +=`<link rel="stylesheet" href="themes/${config.theme}/${config.theme}.css">`;
+
+if (config.theme == 'watt') {
+    document.getElementById('canvas').width = 816
+}
+
+if (config.theme == 'nemo') {
+    document.getElementById('canvas').width = 816
+}

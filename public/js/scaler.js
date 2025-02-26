@@ -1,4 +1,5 @@
- $(function(){
+var mainAspect;
+$(function(){
 	var $main = $("#main"),
 		$window = $( window ),
 	    mainHeight = $main.outerHeight(),
