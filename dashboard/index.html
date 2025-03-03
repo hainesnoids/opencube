@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <style>
+            body {
+                background-color: #383838;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #fff;
+                margin: 0;
+            }
+            #main {
+                text-align: center;
+            }
+            #logo {
+                width: 300px;
+                height: auto;
+            }
+            .songlist {
+                text-align: center;
+                width: fit-content;
+                margin: auto;
+            }
+            .song_item {
+                display: flex;
+                background-color: #202020;
+                border: 1px solid #484848;
+                border-radius: 12px;
+                width: 100vw;
+                max-width: calc(480px + 14px);
+                height: 80px;
+                padding: 6px;
+                text-align: left;
+                margin: 4px 0;
+            }
+            .song_item img {
+                width: 80px;
+                height: 80px;
+                border-radius: 6px;
+            }
+            .song_metadata {
+                margin: 0 7px;
+            }
+            .song_item h1 {
+                margin: 0;
+                font-size: 20pt;
+            }
+            .song_item h2 {
+                margin: 0;
+                color: #b0b0b0;
+                font-size: 14pt;
+                font-weight: normal;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <img id="logo" src="logo.png">
+            <div id="playlist_wrapper">
+                <h1>Playlist</h1>
+                <button onclick="fetch('/api/shuffle')">Re-shuffle Songs</button>
+                <div class="songlist" id="playlist">
+                    
+                </div>
+            </div>
+            <div id="song_control">
+                <h1>Playlist Control</h1>
+                <span>Coming Soon!</span>
+            </div>
+        </div>
+        <script type="text/javascript" src="/js/playlist.js"></script>
+        <script>
+            shuffled
+            for (let idx = 0; idx < shuffled.length; idx++) {
+                const itm = shuffled[idx];
+                document.getElementById('playlist').innerHTML += `
+                <div class="song_item">
+                    <img src="/images/albums/${itm.album}.jpg">
+                        <div class="song_metadata">
+                            <h1>${itm.name}</h1>
+                            <h2>${itm.artist} • ${itm.album}</h2>
+                        </div>
+                    </div>`
+            }
+        </script>
+    </body>
+</html>

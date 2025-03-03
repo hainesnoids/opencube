@@ -36,20 +36,18 @@ async function pregressBar() {
     const intervalId = setInterval(updateProgress, 200);
 }
 
-function shufflePlaylist() {
+/*function shufflePlaylist() { // now done in app.js
     shuffled = shuffle(songs);
-    /*shuffled.unshift({
+    shuffled.unshift({
         "name": "test",
         "artist": "test",
         "album": "Sample Heaven",
         "url": "/songs/test.wav"
-    },)*/
-}
+    },)
+}*/
 
 async function songQueue() {
-    songCount = songs.length;
-
-    shufflePlaylist();
+    songCount = shuffled.length;
 
     Visualizer.file = shuffled[0].url;
     Visualizer.fileName = "automatic playback enabled"
@@ -61,7 +59,7 @@ async function songQueue() {
 
 async function nextSong() {
     idx++ // increase song index by 1
-    if (idx >= songs.length) {
+    if (idx >= shuffled.length) {
         idx = 1;
         location = ''
     }

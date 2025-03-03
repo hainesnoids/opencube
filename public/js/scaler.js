@@ -1,4 +1,4 @@
-/*var mainAspect;
+var mainAspect;
 $(function(){
 	var $main = $("#main"),
 		$window = $( window ),
@@ -27,10 +27,7 @@ $(function(){
 		$main.css({
 			transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
 		});
-		$("#startup").css({
-			transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
-		});
 	}
 	scaleWindow(); // init
 
-});*/
+});
