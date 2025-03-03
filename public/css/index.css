@@ -106,6 +106,8 @@ canvas {
     top: 94px;
     left: 0px; /* nice */
     z-index: 2;
+    width: 1080px;
+    height: 360px;
 }
 #title {
     position: absolute;

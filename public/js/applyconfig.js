@@ -48,9 +48,9 @@ document.documentElement.style.setProperty("--def-end", (config.details.albumArt
 document.head.innerHTML +=`<link rel="stylesheet" href="themes/${config.theme}/${config.theme}.css">`;
 
 if (config.theme == 'watt') {
-    document.getElementById('canvas').width = 816
+    document.getElementById('canvas').width = 1176
 }
 
 if (config.theme == 'nemo') {
-    document.getElementById('canvas').width = 816
+    document.getElementById('canvas').width = 1176
 }

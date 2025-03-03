@@ -63,6 +63,7 @@ body {
     z-index: 7;
     position: absolute;
     opacity: 0 !important;
+    display: none !important;
 }
 #fileWrapper:hover{
     opacity: 0 !important;
@@ -114,20 +115,21 @@ body {
     position: absolute;
     top: 30px;
     left: 30px;
+    transform: translate(calc(var(--box-width) * -1),0);
 }
 canvas {
     position: absolute;
     top: 110px;
     left: 0; /* nice */
     z-index: 2;
-    width: 816px;
+    width: 1176px;
     height: 360px;
 }
 #title {
     position: absolute;
     margin: 0;
     top: 4px;
-    left: 0px; /* nice */
+    left: 180px; /* nice */
     font-size: 40pt;
     text-wrap: nowrap;
     font-weight: bold;
@@ -135,7 +137,7 @@ canvas {
 #artist {
     position: absolute;
     top: 34px;
-    left: 0px; /* nice */
+    left: 180px; /* nice */
     font-weight: normal;
     font-size: 28pt;
     font-weight: light;
@@ -143,7 +145,7 @@ canvas {
 #album {
     position: absolute;
     top: 80px;
-    left: 0px; /* nice */
+    left: 180px; /* nice */
     font-weight: normal;
     font-size: 28pt;
     font-weight: light;
@@ -173,12 +175,13 @@ canvas {
     transform: translate(-50%,-50%);
 }
 #art_wrapper {
-    width: 360px;
-    height: 360px;
+    width: 160px;
+    height: 160px;
     position: absolute;
     top: 30px;
-    right: 30px;
+    left: 30px;
     perspective: 1024px;
+    transform: translate(calc(var(--box-width) * -1),0);
 }
 #hdsblur {
     position: absolute;

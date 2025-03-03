@@ -1,17 +1,15 @@
 {
   "name": "OpenCube",
-  "version": "1.2",
+  "version": "2.0",
   "description": "Web-based media player for 24/7 music streams and such",
   "scripts": {
     "mrrp": "echo mraow",
-    "start": "http-server -p8255 ./public"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "Hainesnoids",
   "license": "MIT",
   "dependencies": {
-    "http-server": "*",
-    "music-metadata": "*",
-    "files": "*"
+    "express": "*"
   }
 }

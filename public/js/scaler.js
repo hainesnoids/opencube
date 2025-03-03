@@ -1,4 +1,4 @@
-var mainAspect;
+/*var mainAspect;
 $(function(){
 	var $main = $("#main"),
 		$window = $( window ),
@@ -33,4 +33,4 @@ $(function(){
 	}
 	scaleWindow(); // init
 
-});
+});*/

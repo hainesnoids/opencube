@@ -53,6 +53,7 @@ body {
     z-index: 7;
     position: absolute;
     opacity: 0 !important;
+    display: none !important;
 }
 #fileWrapper:hover{
     opacity: 0 !important;
