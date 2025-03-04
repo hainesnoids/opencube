@@ -41,6 +41,13 @@ async function pregressBar() {
         }
         progtimestamp = buffer.duration;
         const timeLeft = progtimestamp - i;
+        fetch('/api/save/songdata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({proglength,i,idx})
+        })
         document.getElementById('clock').innerText = `${Math.floor(i / 60)}:${(Math.floor(i) % 60).toString().padStart(2,'0')}`
         document.getElementById('clock_neg').innerText = `-${Math.floor(timeLeft / 60)}:${(Math.floor(timeLeft) % 60).toString().padStart(2, '0')}`;
     }

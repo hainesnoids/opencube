@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OpenCube Dashboard</title>
         <style>
             body {
                 background-color: #383838;
@@ -15,6 +17,17 @@
                 width: 300px;
                 height: auto;
             }
+            button {
+                background-color: #202020;
+                border: 1px solid #484848;
+                color: #fff;
+                border-radius: 8px;
+                padding: 6px 8px;
+                font-size: 12pt;
+            }
+            button:hover {
+                cursor: pointer;
+            }
             .songlist {
                 text-align: center;
                 width: fit-content;
@@ -22,6 +35,7 @@
             }
             .song_item {
                 display: flex;
+                flex-direction: column;
                 background-color: #202020;
                 border: 1px solid #484848;
                 border-radius: 12px;
@@ -31,6 +45,35 @@
                 padding: 6px;
                 text-align: left;
                 margin: 4px 0;
+                overflow: hidden;
+            }
+            .data {
+                display: flex;
+                width: 100%;
+                height: 80px;
+                text-align: left;
+            }
+            .current_song {
+                transform: scale(120%);
+                transform-origin: center;
+                margin: 13.67px 0;
+            }
+            .progress-wrapper {
+                width: calc(100% - 6px);
+                margin: 3px;
+                height: auto;
+            }
+            .progress-bar {
+                width: 100%;
+                height: 4px;
+                border-radius: 6px;
+                background-color: #00d50040;
+            }
+            .progress {
+                background-color: #00d500;
+                border-radius: 6px;
+                height: 100%;
+                width: 0%;
             }
             .song_item img {
                 width: 80px;
@@ -38,7 +81,8 @@
                 border-radius: 6px;
             }
             .song_metadata {
-                margin: 0 7px;
+                margin-left: 6px;
+                width: calc(494px - 80px - 6px);
             }
             .song_item h1 {
                 margin: 0;
@@ -49,6 +93,13 @@
                 color: #b0b0b0;
                 font-size: 14pt;
                 font-weight: normal;
+                text-wrap: nowrap;
+                overflow: scroll;
+            }
+            #time {
+                font-size: 10pt;
+                display: flex;
+                justify-content: space-between;
             }
         </style>
     </head>
@@ -56,16 +107,14 @@
         <div id="main">
             <img id="logo" src="logo.png">
             <div id="playlist_wrapper">
-                <h1>Playlist</h1>
-                <button onclick="shuffle()">Re-shuffle Songs</button>
+                <button onclick="shuffle()">Shuffle Songs</button>
+                <!--<button onclick="playPause()">▶⏸</button>
+                <button onclick="nextSong()">⏭</button>-->
                 <div class="songlist" id="playlist">
-                    
+                
                 </div>
             </div>
-            <div id="song_control">
-                <h1>Playlist Control</h1>
-                <span>Coming Soon!</span>
-            </div>
+            <footer>© 2025 Hainesnoids</footer>
         </div>
         <script type="text/javascript" src="/js/playlist.js"></script>
         <script type="text/javascript" src="script.js"></script>
