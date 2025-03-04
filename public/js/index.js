@@ -11,6 +11,17 @@ window.onload = function() {
     new Visualizer().ini();
 };
 
+function pollRefresh() {
+    fetch('/api/doirefresh')
+        .then(response => response.json())
+        .then(data => {
+            if (data.message == true) {
+                location.reload();
+            }
+        })
+}
+setInterval(pollRefresh, 5000);
+
 function start() {
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._start();
@@ -52,7 +63,7 @@ async function songQueue() {
     Visualizer.file = shuffled[0].url;
     Visualizer.fileName = "automatic playback enabled"
     setMetadata(shuffled[idx]);
-    idx = 1;
+    idx = 0;
     Visualizer.status = 1;
     Visualizer.prototype._start;
 }
@@ -62,7 +73,8 @@ async function nextSong() {
     if (idx >= shuffled.length) {
         idx = 1;
         location = ''
-    }
+    };
+    fetch('/api/advancePlaylist'); // advance dashboard playlist item
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
     setMetadata(shuffled[idx]);

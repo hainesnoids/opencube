@@ -1,6 +1,6 @@
 {
   "name": "OpenCube",
-  "version": "2.0",
+  "version": "2.1",
   "description": "Web-based media player for 24/7 music streams and such",
   "scripts": {
     "mrrp": "echo mraow",

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             body {
                 background-color: #383838;
@@ -56,7 +57,7 @@
             <img id="logo" src="logo.png">
             <div id="playlist_wrapper">
                 <h1>Playlist</h1>
-                <button onclick="fetch('/api/shuffle')">Re-shuffle Songs</button>
+                <button onclick="shuffle()">Re-shuffle Songs</button>
                 <div class="songlist" id="playlist">
                     
                 </div>
@@ -67,19 +68,6 @@
             </div>
         </div>
         <script type="text/javascript" src="/js/playlist.js"></script>
-        <script>
-            shuffled
-            for (let idx = 0; idx < shuffled.length; idx++) {
-                const itm = shuffled[idx];
-                document.getElementById('playlist').innerHTML += `
-                <div class="song_item">
-                    <img src="/images/albums/${itm.album}.jpg">
-                        <div class="song_metadata">
-                            <h1>${itm.name}</h1>
-                            <h2>${itm.artist} • ${itm.album}</h2>
-                        </div>
-                    </div>`
-            }
-        </script>
+        <script type="text/javascript" src="script.js"></script>
     </body>
 </html>

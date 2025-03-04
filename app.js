@@ -38,8 +38,20 @@ async function shufflePlaylist() {
 }
 shufflePlaylist()
 
-// dashboard shit
+var doirefresh = false
+
 app.get('/api/shuffle', (req, res) => {
     shufflePlaylist()
+    doirefresh = true
     res.json({ message: "Done" });
+});
+app.get('/api/song', (req, res) => {
+    res.json({ message: "Done" });
+});
+app.get('/api/advanceplaylist', (req, res) => { // currently does nothing
+    res.json({ message: "Done" });
+});
+app.get('/api/doirefresh', (req, res) => {
+    res.json({ message: doirefresh });
+    doirefresh = false
 });
