@@ -1,22 +1,21 @@
 # openCube
 HTML5 Audio Player for Web Streams and other sorts of things.
+> Now with easy playlist panel!
 
 # Installation
 ## Dependencies
 > You can install all dependencies automatically by running `npm install`.
-- `http-server`
+- `http-server`, `axios`, `body-parser`, `multer` and `music-metadata`
 ## Running OpenCube
 Run the command `npm start`.
 # Configuration
 For must stuff, use config.js
 ## Adding / Removing songs
-> This may be tedious, as much of the song-related stuff is hardcoded.
-### 1. Add the song file(s)
-Place your songs into the `/public/songs` folder.
-### 2. Add your songs to the playlist
-Open `/public/playlist.js`, and copy one of the list items to the end of the array. Fill in the details, and keep note of the album name for the next step.
+### 1. Upload your music files
+First, open [Playlister](http://localhost/playlister) & click `Choose File`, select your song & click `Add Song`
+### 2. Refresh your playlist
+Navigate to the [openCube Dashboard](http://localhost/dashboard) and click Regenerate list.
 ### 3. Album Art
-1. Search for the album on https://odesli.co/ and download the album art from there. Place it in `/public/images/albums`.
-2. Rename it to the **exact name** of the album as defined in the song playlist. **This is case sensitive.**
+If the music file you uploaded doesn't have artwork, openCube will fetch it for you from last.fm (requires last.fm account & API key)
 
 © 2025 Hainesnoids & Weather Ranch
