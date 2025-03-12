@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://files.catbox.moe/8a36qa.png">
+</p> 
+
 # openCube
 HTML5 Audio Player for Web Streams and other sorts of things.
 > Now with easy playlist panel!
