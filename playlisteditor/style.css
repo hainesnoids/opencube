@@ -1,0 +1,196 @@
+body {
+    background-color: #383838;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    margin: 0;
+}
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+#main {
+    text-align: center;
+}
+#logo {
+    width: 300px;
+    height: auto;
+}
+button {
+    background-color: #202020;
+    border: 1px solid #484848;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 12pt;
+}
+button:hover {
+    cursor: pointer;
+}
+.songlist {
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+}
+.album_item {
+    display: flex;
+    flex-direction: column;
+    background-color: #202020;
+    border: 1px solid #484848;
+    width: 100vw;
+    max-width: 480px;
+    height: auto;
+    text-align: left;
+    margin: 4px 0;
+    overflow: hidden;
+}
+.album_details {
+    display: flex;
+    width: 100%;
+    height: 96px;
+    text-align: left;
+}
+.song_item {
+    display: flex;
+    border-top: 1px solid #484848;
+    flex-direction: column;
+    width: 100vw;
+    max-width: 480px;
+    height: 64px;
+    text-align: left;
+    overflow: hidden;
+}
+.data {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    text-align: left;
+}
+.current_song {
+    transform: scale(120%);
+    transform-origin: center;
+    margin: 13.67px 0;
+}
+.progress-wrapper {
+    width: calc(100% - 6px);
+    margin: 3px;
+    height: auto;
+}
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    border-radius: 6px;
+    background-color: #00d50040;
+}
+.progress {
+    background-color: #00d500;
+    border-radius: 6px;
+    height: 100%;
+    width: 0%;
+}
+.song_item img {
+    width: 64px;
+    height: 64px;
+}
+.album_metadata {
+    margin-left: 6px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+.song_metadata {
+    margin-left: 6px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+.album_metadata h1 {
+    margin: 0;
+    font-size: 20pt;
+}
+.album_metadata h2 {
+    margin: 0;
+    color: #b0b0b0;
+    font-size: 14pt;
+    font-weight: normal;
+    text-wrap: nowrap;
+    overflow: scroll;
+}
+
+.title_input {
+    margin: -2px;
+    font-weight: 500;
+    font-size: 18pt;
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: none;
+}
+.artist_input {
+    margin: -2px;
+    color: #b0b0b0;
+    font-size: 14pt;
+    font-weight: normal;
+    text-wrap: nowrap;
+    overflow: scroll;
+    background-color: transparent;
+    border: none;
+    padding: none;
+}
+.album_input {
+    margin: -2px;
+    font-weight: 500;
+    font-size: 18pt;
+    color: white;
+    background-color: transparent;
+    font-weight: bold;
+    border: none;
+    padding: none;
+}
+
+#time {
+    font-size: 10pt;
+    display: flex;
+    justify-content: space-between;
+}
+.add_song_btn {
+    width: 100%;
+    height: 36px;
+    border: none;
+    border-top: 1px solid #484848;
+    border-radius: 0;
+}
+
+.remove-button {
+    background-color: #ef300e00;
+    color: #ef300e;
+    border: none;
+    border-radius: 0;
+    width: 32px;
+    height: 24px;
+    padding: 0;
+    padding-top: 3px;
+
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 0;
+}
+
+.cover_art_btn {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    width: auto;
+    aspect-ratio: 1;
+}

@@ -1,6 +1,6 @@
 var config = {
     accentColor: '#ffffff', // Player Accent Color
-    theme: 'default', // Theme to Use (default, watt, nemo, fyber, cube, benton)
+    theme: 'nemo24', // Theme to Use (default, watt, nemo, fyber, cube, benton)
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},
@@ -14,8 +14,8 @@ var config = {
         capHeight: 2, // Height of the caps (in pixels)
     },
     background: {
-        type: 'video', // Type of background to use (video, image, none)
-        url: '/images/background.mp4', // Link to video or image to use as the background
+        type: 'none', // Type of background to use (video, image, none)
+        url: '/images/northernlights.jpg', // Link to video or image to use as the background
     },
     progressBar: {
         glow: false, // Add a glow effect to the progress bar, which matches the accent color.

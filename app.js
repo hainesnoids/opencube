@@ -1,42 +1,21 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require('fs').promises
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 80;
 
-function getLocalIp(){
-    'use strict';
-
-    const { networkInterfaces } = require('os');
-
-    const nets = networkInterfaces();
-    const results = {}; // Or just '{}', an empty object
-
-    for (const name of Object.keys(nets)) {
-        for (const net of nets[name]) {
-            // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-            // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-            const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
-            if (net.family === familyV4Value && !net.internal) {
-                if (!results[name]) {
-                    results[name] = [];
-                }
-                results[name].push(net.address);
-            }
-        }
-    }
-    return results["en0"][0]
-}
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(PORT, () => {});
 
 app.use('/dashboard', express.static(path.join(__dirname, 'dashboard')));
+app.use('/playlisteditor', express.static(path.join(__dirname, 'playlisteditor')));
+app.use('/playlist', express.static(path.join(__dirname, 'playlist.json')));
 app.use('/api/save', bodyParser.json());
 
 console.log(`OpenCube is now running at http://localhost:${PORT}`)
-console.log(`Access the dashboard at http://${getLocalIp()}:${PORT}/dashboard`)
+console.log(`Access the dashboard at http://localhost:${PORT}/dashboard`)
 
 // shuffle playlist
 async function shufflePlaylist() {
@@ -52,8 +31,10 @@ async function shufflePlaylist() {
 		array[j] = temp;
 	}
     const content = `const shuffled = ${JSON.stringify(array, null, 2)};`;
+    const content2 = JSON.stringify(array, null, 2);;
 
     const filePath = path.join(__dirname, 'public', 'js', 'playlist.js');
+    const filePath2 = path.join(__dirname, 'public', 'js', 'playlist.json');
 
     fs.writeFile(filePath, content, (err) => {
     if (err) {
@@ -61,6 +42,13 @@ async function shufflePlaylist() {
     } else {
         console.log('Playlist written to playlist.js');
     }})
+
+    fs.writeFile(filePath2, content2, (err) => {
+        if (err) {
+            console.error('Error writing to file', err);
+        } else {
+            console.log('Playlist written to playlist.js');
+        }})
 }
 shufflePlaylist()
 
@@ -68,6 +56,10 @@ var doirefresh = false
 
 app.get('/api/shuffle', (req, res) => {
     shufflePlaylist()
+    doirefresh = true
+    res.json({ message: "Done" });
+});
+app.get('/api/refresh', (req, res) => { // refresh the player
     doirefresh = true
     res.json({ message: "Done" });
 });
@@ -94,4 +86,50 @@ app.post('/api/save/songdata', (req, res) => {
     const content = JSON.stringify({ "songLength": data.proglength, "songProgress": data.i, "song": data.idx });
     fs.writeFile(filePath, content)
     res.json({ message: "Done" });
+});
+
+app.use('/api/uploadsong', fileUpload());
+app.post('/api/uploadsong', (req, res) => {
+    let songFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    songFile = req.files.songFile;
+    uploadPath = path.join(__dirname, 'public', 'songs', songFile.name);
+
+    songFile.mv(uploadPath, function(err) {
+        if (err) return res.status(500).send(err);
+        res.json({ message: "Song uploaded successfully." });
+        console.warn('! Song uploaded:', songFile.name);
+    });
+});
+
+app.use('/api/uploadcoverart', fileUpload());
+app.post('/api/uploadcoverart', (req, res) => {
+    let songFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    songFile = req.files.songFile;
+    uploadPath = path.join(__dirname, 'public', 'images', 'albums', songFile.name);
+
+    songFile.mv(uploadPath, function(err) {
+        if (err) return res.status(500).send(err);
+        res.json({ message: "Album art uploaded successfully." });
+    });
+});
+
+app.post('/api/save/playlist', async (req, res) => {
+    var data = req.body;
+    const filePath = path.join(__dirname, 'playlist.json');
+    const content = JSON.stringify(data, null, 2);
+    await fs.writeFile(filePath, content);
+    res.json({ message: "Done" });
+    console.log('!!! Playlist Updated');
 });

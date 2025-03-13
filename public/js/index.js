@@ -11,6 +11,12 @@ window.onload = function() {
     new Visualizer().ini();
 };
 
+async function getAverageColor(img) {
+    const fac = new FastAverageColor();
+    const color = await fac.getColorAsync(img);
+    return color
+}
+
 function pollRefresh() {
     fetch('/api/doirefresh')
         .then(response => response.json())
@@ -22,21 +28,35 @@ function pollRefresh() {
 }
 setInterval(pollRefresh, 5000);
 
+var scrollInterval;
+
 function start() {
+    if (config.theme == "nemo24") {
+        document.getElementById('canvas').width = 144;
+        document.getElementById('canvas').height = 256;
+    }
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._start();
 }
 
 async function pregressBar() {
     const progress = document.getElementById('progress');
+
+    const speed = 1;
+    var offset = 0;
+    const textObject = document.getElementById('title');
+    const parentWidth = document.getElementById('details_wrapper').getBoundingClientRect().width;
+    const textWidth = textObject.getBoundingClientRect().width;
+
     var buffer = audioBufferSouceNode.buffer;
     proglength = buffer.duration;
-    var i = 0
+    var i = 0;
     function updateProgress() {
         i = i + 0.2
         progress.style.width = (i / proglength) * 100 + '%'; // Convert to percentage
         if (i >= Math.floor(proglength)) {
             clearInterval(intervalId);
+            clearInterval(scrollInterval);
             Visualizer.prototype._audioEnd();
         }
         progtimestamp = buffer.duration;
@@ -51,6 +71,20 @@ async function pregressBar() {
         document.getElementById('clock').innerText = `${Math.floor(i / 60)}:${(Math.floor(i) % 60).toString().padStart(2,'0')}`
         document.getElementById('clock_neg').innerText = `-${Math.floor(timeLeft / 60)}:${(Math.floor(timeLeft) % 60).toString().padStart(2, '0')}`;
     }
+
+    function textScroll() {
+        if (textWidth > parentWidth) {
+            textObject.style.transform = `translateX(${offset}px)`;
+            offset = offset - speed;
+            if ((offset * -1) - textWidth > 0) {
+                textObject.style.transform = `translateX(${parentWidth}px)`;
+                offset = parentWidth;
+            };
+        } else {
+            return 1;
+        };
+    }
+    const scrollInterval = setInterval(textScroll, 10);
     const intervalId = setInterval(updateProgress, 200);
 }
 
@@ -89,9 +123,20 @@ async function nextSong() {
 }
 
 async function setMetadata(data) {
-    document.getElementById('title').innerText = data.name;
+    if (data.name.includes("[Explicit]")) {
+        document.getElementById('title').innerHTML = data.name.replace('[Explicit]','') + '<span class="material-symbols-outlined" style="font-size: 32pt">explicit</span>';
+    } else {
+        document.getElementById('title').innerText = data.name;
+    }
     document.getElementById('artist').innerText = data.artist;
-    document.getElementById('album').innerText = data.album;
+    if (config.theme == "nemo24") {
+        document.getElementById('album').innerText = "Now Playing";
+        const color = await new FastAverageColor().getColorAsync(`/images/albums/${data.album}.jpg`);
+        document.getElementById('visualizer_wrapper').style.background = `linear-gradient(90deg, ${color.hex} 0%, #000000 300%)`;
+        scrollText();
+    } else {
+        document.getElementById('album').innerText = data.album;
+    }
     if (data.album != document.getElementById('cover_art').src) {
         async function doTheSameButForTheShadow() {
             document.getElementById('cover_art_shadow').style.animation = "rotateArtShadow 1s cubic-bezier(.37,1.28,.64,1)";
@@ -339,6 +384,8 @@ Visualizer.prototype = {
             return;
         };*/
         this.status = 0;
+        document.getElementById('title').style.transform = `translateX(0px)`;
+        offset = 0;
         nextSong();
         /*var text = 'HTML5 Audio Viusalizer';
         document.getElementById('fileWrapper').style.opacity = 1;
@@ -370,3 +417,6 @@ Visualizer.prototype = {
 }
 
 start()
+
+async function scrollText() {
+}
