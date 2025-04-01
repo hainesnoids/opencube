@@ -1,6 +1,6 @@
 {
   "name": "opencube",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Web-based media player for 24/7 music streams and such",
   "scripts": {
     "mrrp": "echo mraow",
@@ -10,6 +10,7 @@
   "author": "Hainesnoids",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "express-fileupload": "^1.5.1"
   }

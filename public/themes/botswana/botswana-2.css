@@ -1,5 +1,5 @@
 /* OpenCube Nemo Stylesheet by Hainesnoids */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .material-symbols-outlined {
     font-size: 20pt !important;
@@ -12,8 +12,8 @@ html, body {
     margin: 0;
     color: var(--accent-color);
     overflow: hidden;
-    font-family: 'Roboto Condensed';
-    font-style: italic;
+    font-family: 'Inter';
+    font-style: normal;
 }
 body {
     background: black;
@@ -42,23 +42,15 @@ body {
     left: 0;
 }
 #visualizer_wrapper {
-    width: 329px;
-    height: 118px;
+    width: 640px;
+    height: 140px;
     position: absolute;
-    top: 854px;
-    left: 1542px;
+    top: 829px;
+    left: 348px;
     z-index: 2;
     overflow: hidden;
     perspective: 1024px;
-    border-radius: 5px;
-    background: linear-gradient(90deg, #330466 0%, #c24d0e 100%);
-}
-#visualizer_wrapper::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-    background-image: url("slice.svg");
+    background: linear-gradient(180deg, #efefef 0%, #909090 100%);
 }
 #fileWrapper{
     transition:all 0.5s ease;
@@ -75,9 +67,9 @@ body {
 }
 #progress-wrapper {
     width: 100%;
-    height: 36px;
+    height: 4px;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0px; /* nice */
     background-color: #00000040;
     z-index: 6;
@@ -90,7 +82,6 @@ body {
     left: 0;
     height: 4px;
     width: 0%;
-    display: none;
 }
 .metadata-itm {
     z-index: 7;
@@ -114,67 +105,69 @@ body {
     display: none;
 }
 #details_wrapper {
-    width: 100%;
+    width: calc(100% - 140px);
     height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 140px;
 }
 canvas {
     position: absolute;
-    top: -2px;
-    right: 4px; /* nice */
+    bottom: 10px;
+    left: 80px; /* nice */
     z-index: 2;
-    width: 64px;
+    width: 340px;
     height: 32px;
     z-index: 9;
 }
 #title {
     position: absolute;
     margin: 0;
-    top: 39px;
+    top: 12px;
     left: 12px; /* nice */
     font-size: 30pt;
     text-wrap: nowrap;
     font-weight: 600;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #000000 !important;
 }
 #artist {
     position: absolute;
-    top: 65px;
+    top: 58px;
     left: 12px; /* nice */
     font-weight: 500;
     font-size: 18pt;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     text-wrap: nowrap;
+    color: #000000 !important;
+    margin: 0;
 }
 #album {
     position: absolute;
     color: #ffffffb0;
-    top: 4px;
+    top: 72px;
     left: 12px; /* nice */
     font-weight: 500;
-    font-size: 20pt;
+    font-size: 18pt;
     margin: 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #000;
+    display: none;
 }
 #clock {
     font-size: 18pt;
     position: absolute;
-    bottom: 12px;
+    bottom: 8px;
     margin: 0;
-    right: 68px;
-    display: none;
+    left: 12px;
+    color: #000;
 }
 
 #clock_neg {
     font-size: 18pt;
     position: absolute;
-    bottom: 12px;
+    bottom: 8px;
     margin: 0;
-    right: 8px;
+    right: 12px;
     font-weight: normal;
-    display: none;
+    color: #000;
 }
 #bg-video {
     width: 1920px;
@@ -185,13 +178,13 @@ canvas {
     transform: translate(-50%,-50%);
 }
 #art_wrapper {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    left: 0;
     perspective: 128px;
-    display: none;
+    display: block;
 }
 #hdsblur {
     position: absolute;

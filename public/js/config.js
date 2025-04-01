@@ -1,6 +1,6 @@
 var config = {
     accentColor: '#ffffff', // Player Accent Color
-    theme: 'nemo24', // Theme to Use (default, watt, nemo, fyber, cube, benton)
+    theme: 'botswana', // Theme to Use (default, watt, nemo, fyber, cube, benton)
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},
@@ -15,7 +15,7 @@ var config = {
     },
     background: {
         type: 'none', // Type of background to use (video, image, none)
-        url: '/images/northernlights.jpg', // Link to video or image to use as the background
+        url: '/images/galaxy_alt.png', // Link to video or image to use as the background
     },
     progressBar: {
         glow: false, // Add a glow effect to the progress bar, which matches the accent color.
@@ -25,7 +25,7 @@ var config = {
         artistColor: '',
         albumColor: '',
         albumArtCornerRadius: 24,
-        albumArtRotation: '10', // Rotation (in degrees) of the album art on the Y axis
+        albumArtRotation: '0', // Rotation (in degrees) of the album art on the Y axis
         albumArtShadow: true, // Enable Album Art Shadow (MUST HAVE THE LATEST OBS TO WORK)
         detailsRotation: '0', // Rotation (in degrees) of the song details, visualizer, and progress bar.
     }

@@ -29,11 +29,20 @@ function pollRefresh() {
 setInterval(pollRefresh, 5000);
 
 var scrollInterval;
+var scrollIntervalArtist;
 
 function start() {
     if (config.theme == "nemo24") {
         document.getElementById('canvas').width = 144;
         document.getElementById('canvas').height = 256;
+    }
+    if (config.theme == "botswana") {
+        document.getElementById('canvas').width = 320;
+        document.getElementById('canvas').height = 256;
+        //document.getElementById('art_wrapper').appendChild(document.getElementById('canvas'));
+        config.visualizer.color[0].color = '#ffffff';
+        config.visualizer.color[1].color = '#ffffff';
+        config.visualizer.color[2].color = '#9bfaff';
     }
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._start();
@@ -44,9 +53,15 @@ async function pregressBar() {
 
     const speed = 1;
     var offset = 0;
+    var artistOffset = 0;
+
     const textObject = document.getElementById('title');
     const parentWidth = document.getElementById('details_wrapper').getBoundingClientRect().width;
     const textWidth = textObject.getBoundingClientRect().width;
+
+    const artistObject = document.getElementById('artist');
+    const artistWidth = artistObject.getBoundingClientRect().width;
+
 
     var buffer = audioBufferSouceNode.buffer;
     proglength = buffer.duration;
@@ -57,6 +72,7 @@ async function pregressBar() {
         if (i >= Math.floor(proglength)) {
             clearInterval(intervalId);
             clearInterval(scrollInterval);
+            clearInterval(scrollIntervalArtist);
             Visualizer.prototype._audioEnd();
         }
         progtimestamp = buffer.duration;
@@ -84,7 +100,22 @@ async function pregressBar() {
             return 1;
         };
     }
+
+    function textScrollArtist() {
+        if (artistWidth > parentWidth) {
+            artistObject.style.transform = `translateX(${artistOffset}px)`;
+            artistOffset = artistOffset - (speed * 0.5);
+            if ((artistOffset * -1) - artistWidth > 0) {
+                artistObject.style.transform = `translateX(${parentWidth}px)`;
+                artistOffset = parentWidth;
+            };
+        } else {
+            return 1;
+        };
+    }
+
     const scrollInterval = setInterval(textScroll, 10);
+    const scrollIntervalArtist = setInterval(textScrollArtist, 10);
     const intervalId = setInterval(updateProgress, 200);
 }
 
@@ -104,6 +135,7 @@ async function songQueue() {
     Visualizer.file = shuffled[0].url;
     Visualizer.fileName = "automatic playback enabled"
     setMetadata(shuffled[idx]);
+    advanceSlideshow();
     idx = 0;
     Visualizer.status = 1;
     Visualizer.prototype._start;
@@ -115,6 +147,7 @@ async function nextSong() {
         idx = 1;
         location = ''
     };
+    advanceSlideshow();
     fetch('/api/advancePlaylist'); // advance dashboard playlist item
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
@@ -133,7 +166,8 @@ async function setMetadata(data) {
         document.getElementById('album').innerText = "Now Playing";
         const color = await new FastAverageColor().getColorAsync(`/images/albums/${data.album}.jpg`);
         document.getElementById('visualizer_wrapper').style.background = `linear-gradient(90deg, ${color.hex} 0%, #000000 300%)`;
-        scrollText();
+    } else if (config.theme == "botswana") {
+        document.getElementById('album').innerText = "NOW PLAYING";
     } else {
         document.getElementById('album').innerText = data.album;
     }
@@ -385,6 +419,7 @@ Visualizer.prototype = {
         };*/
         this.status = 0;
         document.getElementById('title').style.transform = `translateX(0px)`;
+        document.getElementById('artist').style.transform = `translateX(0px)`;
         offset = 0;
         nextSong();
         /*var text = 'HTML5 Audio Viusalizer';
@@ -414,9 +449,6 @@ Visualizer.prototype = {
             this.infoUpdateId = setTimeout(animateDot, 250);
         };
     }
-}
+};
 
 start()
-
-async function scrollText() {
-}

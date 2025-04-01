@@ -1,4 +1,4 @@
-const shuffled = [
+[
   {
     "name": "Baba O'Riley",
     "artist": "The Who",
@@ -491,4 +491,4 @@ const shuffled = [
     "album": "Fastbreaker (Single)",
     "url": "/songs/Fastbreaker.wav"
   }
-];
+]

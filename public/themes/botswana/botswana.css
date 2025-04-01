@@ -1,0 +1,323 @@
+/* OpenCube Nemo Stylesheet by Hainesnoids */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/regular.otf");
+}
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/regular-italic.otf");
+    font-style: italic;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/medium.otf");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/medium-italic.otf");
+    font-style: italic;
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/bold.otf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url("./avenir/bold-italic.otf");
+    font-style: italic;
+    font-weight: bold;
+}
+
+.material-symbols-outlined {
+    font-size: 32pt !important;
+}
+
+textarea {
+    resize: none;
+}
+html, body {
+    margin: 0;
+    color: var(--accent-color);
+    overflow: hidden;
+    font-family: 'Avenir';
+    font-style: normal;
+}
+body {
+    background: black;
+    height: 100vh;
+    width: 100vw;
+}
+#main {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    width: 1920px;
+    height: 1080px;
+    will-change: transform;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url("fr96.png");
+}
+#wrapper {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#visualizer_wrapper {
+    width: 1920px;
+    height: 154px;
+    position: absolute;
+    top: 826px;
+    left: 0px;
+    z-index: 2;
+    overflow: hidden;
+    perspective: 1024px;
+    background: linear-gradient(90deg, #000 0%, #2544CD 50%, #2544CD 60%, #000 100%);
+}
+#fileWrapper{
+    transition:all 0.5s ease;
+    z-index: 7;
+    position: absolute;
+    opacity: 0 !important;
+    display: none !important;
+}
+#fileWrapper:hover{
+    opacity: 0 !important;
+}
+#visualizer_wrapper{
+    text-align: center;
+}
+#progress-wrapper {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    left: 0px; /* nice */
+    background: linear-gradient(180deg, #101010 0%, #101010 48%, #000 52%, #000 100%);
+    z-index: 6;
+    border-top: 4px solid #9bfaff;
+}
+#progress-wrapper::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    z-index: 11;
+    position: absolute;
+}
+#progress {
+    z-index: 4;
+    background: linear-gradient(180deg, #3964c2 0%, #3964c2 50%, #0a2679 50%, #0a2679 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    opacity: .5;
+    transition: width .2s linear;
+}
+.metadata-itm {
+    z-index: 7;
+}
+#cover_art {
+    width: 100%;
+    height: auto;
+    border-radius: 32px;
+    border-radius: 0;
+    position: relative;
+    top: -61px;
+}
+#cover_art_shadow {
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    transform: rotateX(180deg);
+    mask-image: linear-gradient(transparent 50%, rgb(0 0 0 / 50%) 100%) !important;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    border-radius: 0;
+    display: none;
+}
+#details_wrapper {
+    width: calc(100% - 280px);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 280px;
+}
+#details_wrapper::before {
+    content: "";
+    background-image: url("dash.svg");
+    background-size: 21px 150px;
+    width: 18px;
+    height: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    position: absolute;
+    opacity: .5;
+}
+canvas {
+    position: absolute;
+    top: 0;
+    right: 274px;
+    width: 320px;
+    height: 92px;
+    z-index: 9;
+    display: none;
+    /*filter: drop-shadow(0px 0px 4px #000);*/
+}
+#title {
+    position: absolute;
+    margin: 0;
+    top: 5px;
+    left: 34px; /* nice */
+    font-size: 60pt;
+    text-wrap: nowrap;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    z-index: 11;
+}
+#artist {
+    position: absolute;
+    top: 98px;
+    left: 0; /* nice */
+    font-weight: 700;
+    font-size: 30pt;
+    text-wrap: nowrap;
+    color: #ffffff !important;
+    margin: 0;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #3964c2 0%, #3964c2 50%, #0a2679 50%, #0a2679 100%);
+    height: 56px;
+    box-sizing: border-box;
+    padding: 8px 32px 0 14px;
+    z-index: 11;
+}
+#artist::after {
+    content: "";
+    background-image: url("dash.svg");
+    background-size: 21px 150px;
+    width: 18px;
+    height: 100%;
+    display: block;
+    top: 0;
+    right: 0;
+    position: absolute;
+    opacity: .5;
+}
+#album {
+    position: absolute;
+    color: #ffffffb0;
+    top: 0px;
+    left: 0px; /* nice */
+    font-weight: 500;
+    font-size: 18pt;
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(180deg, #6d22c1 0%, #3d166c 100%);
+    padding: 3px 8px;
+    display: none;
+}
+#clock {
+    font-size: 28pt;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    right: 400px;
+    color: #ffffff;
+}
+
+#clock_neg {
+    font-size: 28pt;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    right: 300px;
+    font-weight: normal;
+    color: #ffffff;
+}
+#bg-video {
+    width: 1920px;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#art_wrapper {
+    width: 280px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    perspective: 320px;
+    z-index: 11;
+    border: 2px solid white;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#hdsblur {
+    position: absolute;
+    bottom: 0;
+    width: 1920px;
+    height: 160px;
+    z-index: 999999;
+    backdrop-filter: blur(10px);
+    background-color: #ffffff40;
+}
+@keyframes rotateArt {
+    0% {
+        transform: translate(-0%,0);
+    }
+    49% {
+        transform: translate(-100%,0);
+    }
+    49.5% {
+        transform: translate(-100%,-200%);
+    }
+    50.5% {
+        transform: translate(100%,-200%);
+    }
+    51% {
+        transform: translate(100%,0);
+    }
+    100% {
+        transform: translate(0%,0);
+    }
+}
+
+@keyframes rotateArtShadow {
+    0% {
+        transform: translate(-0%,0);
+    }
+    49% {
+        transform: translate(-100%,0);
+    }
+    49.5% {
+        transform: translate(-100%,-200%);
+    }
+    50.5% {
+        transform: translate(100%,-200%);
+    }
+    51% {
+        transform: translate(100%,0);
+    }
+    100% {
+        transform: translate(0%,0);
+    }
+}

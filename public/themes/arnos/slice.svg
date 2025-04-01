@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="1130.44 299.546 329 118" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<linearGradient gradientTransform="matrix(343.489 0 8.6924e-15 343.489 1075.2 358.546)" gradientUnits="userSpaceOnUse" id="LinearGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0.223199" stop-color="#ffffff" stop-opacity="0"/>
+<stop offset="1" stop-color="#ffffff" stop-opacity="0.148889"/>
+</linearGradient>
+</defs>
+<g id="Layer">
+<g opacity="1">
+<clipPath clip-rule="nonzero" id="ClipPath">
+<path d="M1130.44 309.546C1130.44 304.023 1134.92 299.546 1140.44 299.546L1449.44 299.546C1454.97 299.546 1459.44 304.023 1459.44 309.546L1459.44 407.546C1459.44 413.069 1454.97 417.546 1449.44 417.546L1140.44 417.546C1134.92 417.546 1130.44 413.069 1130.44 407.546L1130.44 309.546Z"/>
+</clipPath>
+<g clip-path="url(#ClipPath)">
+<path d="M1089.69 299.546L1418.69 299.546L1404.2 417.546L1075.2 417.546L1089.69 299.546Z" fill="url(#LinearGradient)" fill-rule="nonzero" opacity="1" stroke="none"/>
+</g>
+</g>
+</g>
+</svg>
