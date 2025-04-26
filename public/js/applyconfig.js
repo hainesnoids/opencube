@@ -14,7 +14,7 @@ if (config.background.type == "video") {
     `
 } else if (config.background.type == "none") {
     document.getElementById('main').style.background = `transparent`;
-} else if (config.background.type == "slideshow") {
+} else if (config.background.type == "slideshow" || config.background.type == "albumblur") {
     // do nothing, slideshow.js will do the rest
 } else {
     document.getElementById('main').style.backgroundImage = `url(${config.background.url})`;

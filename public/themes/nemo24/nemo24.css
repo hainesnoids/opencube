@@ -50,7 +50,7 @@ body {
     z-index: 2;
     overflow: hidden;
     perspective: 1024px;
-    border-radius: 5px;
+    border-radius: 10px;
     background: linear-gradient(90deg, #330466 0%, #c24d0e 100%);
 }
 #visualizer_wrapper::before {

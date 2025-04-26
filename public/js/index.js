@@ -6,7 +6,7 @@
 */
 
 var idx = 0
-            
+
 window.onload = function() {
     new Visualizer().ini();
 };
@@ -36,13 +36,18 @@ function start() {
         document.getElementById('canvas').width = 144;
         document.getElementById('canvas').height = 256;
     }
-    if (config.theme == "botswana") {
+    if (config.theme == "wpvi") {
         document.getElementById('canvas').width = 320;
         document.getElementById('canvas').height = 256;
         //document.getElementById('art_wrapper').appendChild(document.getElementById('canvas'));
         config.visualizer.color[0].color = '#ffffff';
         config.visualizer.color[1].color = '#ffffff';
         config.visualizer.color[2].color = '#9bfaff';
+    }
+    if (config.theme == "botswana") {
+        config.visualizer.color[0].color = '#000000';
+        config.visualizer.color[1].color = '#000000';
+        config.visualizer.color[2].color = '#000000';
     }
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._start();
@@ -62,6 +67,26 @@ async function pregressBar() {
     const artistObject = document.getElementById('artist');
     const artistWidth = artistObject.getBoundingClientRect().width;
 
+    //set lyric timestamps
+    var lrcWrapWrap = document.querySelector("#lyrics-wrapper-wrapper").getBoundingClientRect();
+    var lrcWrap = document.querySelector("#lyrics-wrapper");
+    (async () => {
+        for (let idx = 0; idx < songLyrics.length; idx++) {
+            const itm = songLyrics[idx];
+            const elm = document.querySelector(`#lyrics-wrapper h1[data-lyric-id="${idx}"]`);
+            setTimeout(() => {
+                elm.classList.add("active");
+                const rect = elm.getBoundingClientRect();
+                const rectWrap = lrcWrap.getBoundingClientRect();
+                lrcWrap.style.top = ((rect.top - rectWrap.top) * -1) + (lrcWrapWrap.height / 2) - (rect.height / 2) + "px";
+                //elm.scrollIntoView({ behavior: "smooth", block: "center" });
+                //setTimeout(() => {elm.scrollIntoView({ behavior: "smooth", block: "center" });},500)
+            }, itm.timestamp);
+            setTimeout(() => {
+                elm.classList.remove("active");
+            }, songLyrics[idx+1].timestamp === null ? 999999999 : songLyrics[idx+1].timestamp);
+        };
+    })();
 
     var buffer = audioBufferSouceNode.buffer;
     proglength = buffer.duration;
@@ -131,14 +156,61 @@ async function pregressBar() {
 
 async function songQueue() {
     songCount = shuffled.length;
-
     Visualizer.file = shuffled[0].url;
     Visualizer.fileName = "automatic playback enabled"
     setMetadata(shuffled[idx]);
+    getLyrics();
     advanceSlideshow();
     idx = 0;
     Visualizer.status = 1;
     Visualizer.prototype._start;
+}
+
+var songLyrics = []
+
+async function getLyrics() {
+    songLyrics = [];
+    var itm = shuffled[idx];
+    var fileName = itm.url.slice(0, itm.url.lastIndexOf('.'));
+    try {
+        const lrcFile = await fetch(fileName + ".lrc")
+        .then((res) => {return res.text()});
+        const lrcSplit = lrcFile.split("\n");
+        for (let idx = 0; idx < lrcSplit.length; idx++) {
+            const itm = lrcSplit[idx];
+            const rgx = /\[([0-9]+):([0-9]+)\.([0-9]+)\]/i;
+            const timeMatch = itm.match(rgx);
+            if (timeMatch != null) {
+                // get time and content
+                const minutes = parseInt(timeMatch[1], 10);
+                const seconds = parseFloat(timeMatch[2]);
+                const milliseconds = parseInt(timeMatch[3], 10);
+                const lrcTime = (minutes * 60 + seconds) * 1000 + (milliseconds * 10);
+                const lrcString = itm.slice(10);
+                songLyrics.push({
+                    "timestamp": lrcTime,
+                    "value": lrcString
+                })
+            }
+        }
+        const lyricsWrapper = document.getElementById("lyrics-wrapper").style.display = "block";
+        renderLyrics();
+    } catch (err) {
+        console.warn("no lyrics found." + err);
+        const lyricsWrapper = document.getElementById("lyrics-wrapper").style.display = "none";
+    }
+}
+
+async function renderLyrics() {
+    const lyricsWrapper = document.getElementById("lyrics-wrapper");
+    lyricsWrapper.innerHTML = "";
+    for (let idx = 0; idx < songLyrics.length; idx++) {
+        const itm = songLyrics[idx];
+        const lrc = document.createElement("h1");
+        lrc.innerText = itm.value;
+        lrc.setAttribute("data-lyric-id", idx)
+        lyricsWrapper.appendChild(lrc);
+    }
 }
 
 async function nextSong() {
@@ -151,8 +223,9 @@ async function nextSong() {
     fetch('/api/advancePlaylist'); // advance dashboard playlist item
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
+    getLyrics();
     setMetadata(shuffled[idx]);
-    start()
+    start();
 }
 
 async function setMetadata(data) {
@@ -166,10 +239,13 @@ async function setMetadata(data) {
         document.getElementById('album').innerText = "Now Playing";
         const color = await new FastAverageColor().getColorAsync(`/images/albums/${data.album}.jpg`);
         document.getElementById('visualizer_wrapper').style.background = `linear-gradient(90deg, ${color.hex} 0%, #000000 300%)`;
-    } else if (config.theme == "botswana") {
+    } else if (config.theme == "wpvi") {
         document.getElementById('album').innerText = "NOW PLAYING";
     } else {
         document.getElementById('album').innerText = data.album;
+    }
+    if (config.background.type == "albumblur") {
+        document.getElementById('albumblur').style.backgroundImage = `url("/images/albums/${data.album}.jpg")`;
     }
     if (data.album != document.getElementById('cover_art').src) {
         async function doTheSameButForTheShadow() {
@@ -186,6 +262,12 @@ async function setMetadata(data) {
         console.log(document.getElementById('cover_art').src)
         document.getElementById('cover_art').src = `/images/albums/${data.album}.jpg`;
     }
+}
+
+function calculateLoudness(pressure) {
+    const term1 = Math.pow(10, (pressure - 40) / 10);
+    const loudness = /*40 + */10 * Math.log10(term1 + 0.0007);
+    return loudness;
 }
 
 var Visualizer = function() {
@@ -321,13 +403,17 @@ Visualizer.prototype = {
         audioBufferSouceNode.buffer = buffer;
         pregressBar();
         //play the source
-        if (!audioBufferSouceNode.start) {
+        /*if (!audioBufferSouceNode.start) {
             audioBufferSouceNode.start = audioBufferSouceNode.noteOn //in old browsers use noteOn method
             audioBufferSouceNode.stop = audioBufferSouceNode.noteOff //in old browsers use noteOn method
-        };
+        };*/
         //stop the previous sound if any
         if (this.animationId !== null) {
-            cancelAnimationFrame(this.animationId);
+            try {
+                cancelAnimationFrame(this.animationId);
+            } catch(err) {
+                console.log("No sound to stop.")
+            }
         }
         /*if (this.source !== null) {
             this.source.stop(0);
@@ -376,14 +462,22 @@ Visualizer.prototype = {
                     allCapsReachBottom = allCapsReachBottom && (capYPositionArray[i] === 0);
                 };
                 if (allCapsReachBottom) {
-                    cancelAnimationFrame(that.animationId); //since the sound is top and animation finished, stop the requestAnimation to prevent potential memory leak,THIS IS VERY IMPORTANT!
+                    //cancelAnimationFrame(that.animationId); //since the sound is top and animation finished, stop the requestAnimation to prevent potential memory leak,THIS IS VERY IMPORTANT!
                     return;
                 };
             };
+            /*// get last value in the array that is zero
+            let lastEmptyCap = -1;
+            for (let i = array.length - 1; i >= 0; i--) {
+                if (array[i] !== 0) {
+                    lastEmptyCap = i;
+                    break;
+                }
+            }*/
             var step = Math.round(array.length / meterNum); //sample limited data from the total array
             ctx.clearRect(0, 0, cwidth, cheight);
             for (var i = 0; i < meterNum; i++) {
-                var value = array[i * step];
+                var value = calculateLoudness(array[i * step]);
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
                 };
