@@ -56,6 +56,18 @@ async function wsHook() {
 }
 
 function start() {
+    if (config.theme === "nemo24") {
+        document.getElementById('canvas').width = 144;
+        document.getElementById('canvas').height = 256;
+    }
+    if (config.theme === "botswana") {
+        document.getElementById('canvas').width = 320;
+        document.getElementById('canvas').height = 256;
+        //document.getElementById('art_wrapper').appendChild(document.getElementById('canvas'));
+        config.visualizer.color[0].color = '#ffffff';
+        config.visualizer.color[1].color = '#ffffff';
+        config.visualizer.color[2].color = '#9bfaff';
+    }
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._addEventListener();
     Visualizer.prototype._start();
