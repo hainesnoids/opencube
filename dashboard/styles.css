@@ -1,7 +1,7 @@
 @font-face{
     font-family: 'Akko';
     font-weight: normal;
-    src: url('fonts/AkkoPro-light.ttf')
+    src: url('fonts/AkkoPro-Light.ttf')
 }
 
 @font-face{
@@ -9,6 +9,15 @@
     font-weight: bold;
     src: url('fonts/AkkoPro-Medium.ttf')
 }
+
+.material-symbols-sharp {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
 body {
     /*background-color: #383838;*/
     background-color: #000;
@@ -66,6 +75,7 @@ button:hover {
     width: 100%;
     height: 64px;
     text-align: left;
+    position: relative;
 }
 
 @keyframes scaleIn {
@@ -136,18 +146,21 @@ button:hover {
     width: auto;
     aspect-ratio: 1 / 1;
     perspective: 256px;
-    transition: transform .3s ease;
+    transition: transform .5s cubic-bezier(0.33, 1, 0.68, 1);
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .art_wrapper img {
     height: 100%;
     width: auto;
     aspect-ratio: 1 / 1;
-    box-shadow: 0px 0px 8px #00000080;
-    transition: transform .3s ease;
+    margin-left: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transition: transform .5s cubic-bezier(0.33, 1, 0.68, 1)
 }
 
 .song_metadata {
@@ -167,7 +180,7 @@ button:hover {
 
 .song_item h2 {
     margin: 0;
-    color: #b0b0b0;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14pt;
     font-weight: normal;
     text-wrap: nowrap;
@@ -212,4 +225,43 @@ button:hover {
 
 .current_song .song_metadata {
     width: 394px;
+}
+
+.song_item:hover > .song_actions button {
+    transform: translateX(0%);
+}
+
+.song_actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.song_actions button {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    transform: translateX(100%);
+    transition: transform .2s ease-out;
+}
+
+.song_actions button span {
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.7);
 }

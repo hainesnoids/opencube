@@ -1,10 +1,13 @@
 const express = require('express');
+const expressWs = require(`@wll8/express-ws`)
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require('fs').promises
 const bodyParser = require('body-parser');
-const app = express();
-const PORT = 80;
+const {app, wsRoute} = expressWs(express())
+const PORT = 81;
+
+let socket;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(PORT, () => {});
@@ -53,9 +56,11 @@ async function shufflePlaylist() {
 shufflePlaylist()
 
 var doirefresh = false
+let idx = 0
 
 app.get('/api/shuffle', (req, res) => {
     shufflePlaylist()
+    sendShuffle(socket, 0);
     doirefresh = true
     res.json({ message: "Done" });
 });
@@ -66,13 +71,27 @@ app.get('/api/refresh', (req, res) => { // refresh the player
 app.get('/api/song', (req, res) => {
     res.json({ message: "Done" });
 });
-app.get('/api/advanceplaylist', (req, res) => { // currently does nothing
+app.get('/api/advanceplaylist', (req, res) => { // not used anywhere, just for other programs to easily skip to the next song
+    sendShuffle(socket, idx + 1);
     res.json({ message: "Done" });
 });
 app.get('/api/doirefresh', (req, res) => {
     res.json({ message: doirefresh });
     doirefresh = false
 });
+
+var overrideIndex = -1;
+app.get('/api/clientoverrides', (req, res) => {
+    res.json({ index: overrideIndex });
+    overrideIndex = -1;
+});
+app.post('/api/save/jumptosong', (req, res) => {
+    var data = req.body;
+    sendShuffle(socket, data.idx);
+    overrideIndex = data.idx;
+    res.json({ message: "Done" });
+});
+
 app.post('/api/save/songlength', (req, res) => {
     var data = req.body;
     const filePath = path.join(__dirname, 'dashboard', 'clientData.json');
@@ -84,11 +103,12 @@ app.post('/api/save/songdata', (req, res) => {
     var data = req.body;
     const filePath = path.join(__dirname, 'dashboard', 'clientData.json');
     const content = JSON.stringify({ "songLength": data.proglength, "songProgress": data.i, "song": data.idx });
-    fs.writeFile(filePath, content)
+    idx = data.idx;
+    fs.writeFile(filePath, content);
     res.json({ message: "Done" });
 });
 
-app.use('/api/uploadsong', fileUpload());
+app.use('/api/uploadsong', fileUpload(undefined));
 app.post('/api/uploadsong', (req, res) => {
     let songFile;
     let uploadPath;
@@ -107,10 +127,11 @@ app.post('/api/uploadsong', (req, res) => {
     });
 });
 
-app.use('/api/uploadcoverart', fileUpload());
+app.use('/api/uploadcoverart', fileUpload(undefined));
 app.post('/api/uploadcoverart', (req, res) => {
-    let songFile;
-    let uploadPath;
+    let songFile,
+        uploadPath,
+        pathToSend;
 
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
@@ -118,10 +139,11 @@ app.post('/api/uploadcoverart', (req, res) => {
 
     songFile = req.files.songFile;
     uploadPath = path.join(__dirname, 'public', 'images', 'albums', songFile.name);
+    pathToSend = `/images/albums/${songFile.name}`;
 
     songFile.mv(uploadPath, function(err) {
         if (err) return res.status(500).send(err);
-        res.json({ message: "Album art uploaded successfully." });
+        res.json({ message: "Album art uploaded successfully.", path: pathToSend });
     });
 });
 
@@ -133,3 +155,11 @@ app.post('/api/save/playlist', async (req, res) => {
     res.json({ message: "Done" });
     console.log('!!! Playlist Updated');
 });
+
+function sendShuffle(ws, idx) {
+    ws.send(JSON.stringify({"reload": true, "idx": idx}))
+}
+// websocket stuff
+app.ws(`/ws`, (ws, req) => {
+    socket = ws;
+})

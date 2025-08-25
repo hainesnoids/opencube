@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>OpenCube Playlist Editor</title>
@@ -8,7 +8,10 @@
     </head>
     <body>
         <div id="main">
-            <img id="logo" src="logo.png">
+            <dialog id="textAlert">
+                <span>Performing necessary updates to your music library, please wait...</span>
+            </dialog>
+            <img id="logo" src="logo.png" alt="OpenCube"/>
             <h1>Playlist Editor</h1>
             <div id="playlist_wrapper">
                 <button onclick="addEmptyAlbum()">Add Album</button>

@@ -1,9 +1,9 @@
 [
   {
-    "name": "Love Again",
+    "name": "Cool Song 2",
     "artist": "Mere Notilde",
-    "album": "Black One",
-    "url": "/songs/song 2.m4a"
+    "album": "Sample Heaven",
+    "url": "/songs/song 1.m4a"
   },
   {
     "name": "Our Melody",
@@ -12,21 +12,21 @@
     "url": "/songs/song 7.m4a"
   },
   {
+    "name": "Draw the Line",
+    "artist": "Mere Notilde (feat. Tokyo Wanderer & Nameless Warning)",
+    "album": "Sample Heaven",
+    "url": "/songs/song 22.m4a"
+  },
+  {
     "name": "Lift Off",
     "artist": "Mere Notilde",
     "album": "Black One",
     "url": "/songs/song 6.m4a"
   },
   {
-    "name": "Cool Song 2",
+    "name": "Love Again",
     "artist": "Mere Notilde",
-    "album": "Sample Heaven",
-    "url": "/songs/song 1.m4a"
-  },
-  {
-    "name": "Draw the Line",
-    "artist": "Mere Notilde (feat. Tokyo Wanderer & Nameless Warning)",
-    "album": "Sample Heaven",
-    "url": "/songs/song 22.m4a"
+    "album": "Black One",
+    "url": "/songs/song 2.m4a"
   }
 ]

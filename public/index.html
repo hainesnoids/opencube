@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
         <title>OpenCube Visualizer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link rel="stylesheet" href="css/index.css">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <style>
             .material-symbols-outlined {
-              font-variation-settings:
-              'FILL' 1,
-              'wght' 400,
-              'GRAD' 0,
-              'opsz' 24
+                font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
             }
-            </style>
+        </style>
+        <script type="text/javascript" src="js/scaler.js"></script>
 	</head>
     <body>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -24,12 +26,12 @@
                     <div id="info">
                         the player
                     </div>
-                    <input type="file" id="uploadedFile"></input>
+                    <input type="file" id="uploadedFile">
                 </div>
                 <div id="visualizer_wrapper">
                     <div id="art_wrapper">
-                        <img class="metadata-itm" id="cover_art">
-                        <img class="metadata-itm" id="cover_art_shadow">
+                        <img class="metadata-itm" id="cover_art" src="" alt="">
+                        <img class="metadata-itm" id="cover_art_shadow" src="" alt="">
                     </div>
                     <div id="details_wrapper">
                         <div id="progress-wrapper">
@@ -58,6 +60,5 @@
         <script type="text/javascript" src="js/playlist.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="js/scaler.js"></script>
 	</body>
 </html>

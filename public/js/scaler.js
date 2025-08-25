@@ -1,33 +1,39 @@
-/*var mainAspect;
-$(function(){
-	var $main = $("#main"),
-		$window = $( window ),
-	    mainHeight = $main.outerHeight(),
-	    mainWidth = $main.outerWidth(),
-	    mainAspect = 16/9,
-	    resizeTimer;
+/*let windowScale;
 
-//calls rescale when window resizes
-	$(window).resize( function(e) {
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(scaleWindow, 100);
-	});
+document.addEventListener('DOMContentLoaded', function() {
+    const main = document.querySelector('#main'),
+        windowEl = window,
+        mainHeight = main.getBoundingClientRect().height,
+        mainWidth = main.getBoundingClientRect().width,
+        mainAspect = 16/9;
+    let resizeTimer;
 
-	function scaleWindow() {
-		var scale, windowAspect;
+    // Calls rescale when window resizes
+    window.addEventListener('resize', function(e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(scaleWindow, 100);
+    });
 
-		windowAspect = $window.width() / $window.height();
+    function scaleWindow() {
+        let scale, windowAspect;
 
-		if (windowAspect>=mainAspect) {
-			scale = $window.height() / mainHeight;
-		} else {
-			scale = $window.width() / mainWidth;
-		}
+        windowAspect = window.innerWidth / window.innerHeight;
 
-		$main.css({
-			transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
-		});
-	}
-	scaleWindow(); // init
+        if (windowAspect >= mainAspect) {
+            scale = window.innerHeight / mainHeight;
+        } else {
+            scale = window.innerWidth / mainWidth;
+        }
 
-});*/
+        main.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        windowScale = scale;
+    }
+
+    scaleWindow(); // init
+    document.querySelector("#art_wrapper").addEventListener("click",fullscreen);
+});
+
+function fullscreen() {
+    const main = document.body;
+    main.requestFullscreen({navigationUI: "hide"}).then();
+}*/

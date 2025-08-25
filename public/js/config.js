@@ -7,6 +7,7 @@ var config = {
             {color: '#ffffff', position: 0.67},
             {color: '#ffffff', position: 1}
         ],
+        colorSource: "album", // Source of the color (custom, album)
         meterWidth: 12, // Width of Meters (in pixels) for the Visualizer
         meterGap: 12, // Gap Between Meters
         caps: false, // Add caps to the tops of the visualizer, which slowly fall down when music gets quieter
@@ -26,7 +27,7 @@ var config = {
         artistColor: '',
         albumColor: '',
         albumArtCornerRadius: 24,
-        albumArtRotation: '15', // Rotation (in degrees) of the album art on the Y axis
+        albumArtRotation: '0', // Rotation (in degrees) of the album art on the Y axis
         albumArtShadow: true, // Enable Album Art Shadow (MUST HAVE THE LATEST OBS TO WORK)
         detailsRotation: '0', // Rotation (in degrees) of the song details, visualizer, and progress bar.
     }

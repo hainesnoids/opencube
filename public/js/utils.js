@@ -13,3 +13,27 @@ function shuffle (array) {
 
 	return array;
 }
+
+// Array scaling with linear interpolation
+function scaleArray(inputArray, targetLength) {
+    if (targetLength <= 0) return []; // Return an empty array for non-positive target lengths
+    if (inputArray.length === 0) return []; // Return an empty array for empty input
+
+    const outputArray = new Array(targetLength);
+    const scaleFactor = (inputArray.length - 1) / (targetLength - 1);
+
+    for (let i = 0; i < targetLength; i++) {
+        const index = i * scaleFactor;
+        const lowerIndex = Math.floor(index);
+        const upperIndex = Math.ceil(index);
+        const weight = index - lowerIndex;
+
+        if (upperIndex >= inputArray.length) {
+            outputArray[i] = inputArray[lowerIndex]; // Handle edge case for the last element
+        } else {
+            outputArray[i] = inputArray[lowerIndex] * (1 - weight) + inputArray[upperIndex] * weight;
+        }
+    }
+
+    return outputArray;
+}
