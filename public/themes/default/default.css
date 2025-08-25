@@ -1,5 +1,5 @@
 /* OpenCube Default Stylesheet by Hainesnoids */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 textarea {
     resize: none;
 }	
@@ -12,8 +12,8 @@ body {
     background: black;
     height: 100vh;
     width: 100vw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: italic;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 #main {
     position: relative;
@@ -79,7 +79,6 @@ body {
 }
 .metadata-itm {
     z-index: 7;
-    font-style: italic;
 }
 #cover_art {
     width: 100%;
@@ -187,12 +186,11 @@ canvas {
     text-align: right;
     overflow: scroll;
     height: 430px;
-    width: 1120px;
+    width: 1000px;
     mask-image: linear-gradient(transparent 0%, rgb(0 0 0 / 100%) 10%,rgb(0 0 0 / 100%) 90%,transparent 100%) !important;
     padding: 0;
     position: absolute;
     right: -20px;
-    top: 20px;
     -ms-overflow-style: none;
     scrollbar-width: none;
     scroll-behavior: smooth;

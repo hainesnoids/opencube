@@ -110,6 +110,7 @@ body {
     position: absolute;
     top: 0;
     left: 140px;
+    overflow: hidden;
 }
 canvas {
     position: absolute;

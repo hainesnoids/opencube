@@ -50,7 +50,7 @@ body {
     z-index: 2;
     overflow: hidden;
     perspective: 1024px;
-    border-radius: 10px;
+    border-radius: 5px;
     background: linear-gradient(90deg, #330466 0%, #c24d0e 100%);
 }
 #visualizer_wrapper::before {
@@ -84,13 +84,23 @@ body {
 }
 #progress {
     z-index: 4;
-    background-color: var(--accent-color);
+    background-color: transparent;
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 4px;
+    height: 100%;
     width: 0%;
-    display: none;
+    overflow: hidden;
+}
+#progress::before {
+    content: "";
+    display: inline-block;
+    background-image: url("slice.svg");
+    width: 329px;
+    height: 118px;
+    right: -40px;
+    top: 0;
+    position: absolute;
 }
 .metadata-itm {
     z-index: 7;
@@ -114,11 +124,13 @@ body {
     display: none;
 }
 #details_wrapper {
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0; /* nice */
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
 }
 canvas {
     position: absolute;
@@ -139,6 +151,12 @@ canvas {
     font-weight: 600;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+#wrapper.showLyrics #title {
+    font-size: 22pt;
+
+    color: #ffffffb0;
+    top: 2px;
+}
 #artist {
     position: absolute;
     top: 65px;
@@ -148,15 +166,22 @@ canvas {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     text-wrap: nowrap;
 }
+#wrapper.showLyrics #artist {
+    top: 48px;
+    display: none;
+}
 #album {
     position: absolute;
     color: #ffffffb0;
-    top: 4px;
+    top: 3px;
     left: 12px; /* nice */
     font-weight: 500;
     font-size: 20pt;
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+#wrapper.showLyrics #album {
+    display: none;
 }
 #clock {
     font-size: 18pt;
@@ -218,4 +243,51 @@ canvas {
     to {
         transform: rotateY(var(--def-end)) rotateX(180deg);
     }
+}
+#lyrics-wrapper-wrapper {
+    text-align: right;
+    overflow: scroll;
+    height: 82px;
+    width: 100%;
+    mask-image: linear-gradient(transparent 0%, rgb(0 0 0 / 100%) 10%,rgb(0 0 0 / 100%) 90%,transparent 100%) !important;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    bottom: 0;
+}
+#lyrics-wrapper {
+    text-align: right;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    transition: top .3s ease;
+}
+#lyrics-wrapper::-webkit-scrollbar {
+    display: none;
+}
+#lyrics-wrapper h1 {
+    font-weight: normal;
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    margin: .5em;
+    font-size: 23pt;
+    opacity: .67;
+    transition: all .3s ease;
+    min-height: 82pt;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+#lyrics-wrapper h1.active {
+    opacity: 1;
+    font-weight: bold;
+    font-size: 23pt;
 }
