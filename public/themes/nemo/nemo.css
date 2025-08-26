@@ -180,6 +180,36 @@ canvas {
     backdrop-filter: blur(10px);
     background-color: #00000040;
 }
+#albumblur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(53px);
+    transform: scale(1.15,-1.15);
+    animation: albumBlurEffects 20s ease infinite;
+    aspect-ratio: 1;
+}
+@keyframes albumBlurEffects {
+    0% {
+        transform: scale(1.5,-1.5) rotateY(7deg) rotateZ(-5deg);
+    }
+    50% {
+        transform: scale(1.5,-1.5) rotateY(-11deg) rotateZ(-25deg);
+    }
+    75% {
+        transform: scale(1.5,-1.5) rotateY(1deg) rotateZ(-17deg);
+    }
+    100% {
+        transform: scale(1.5,-1.5) rotateY(7deg) rotateZ(-5deg);
+    }
+}
 @keyframes rotateArt {
     from {
         transform: rotateY(var(--def-start));

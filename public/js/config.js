@@ -11,9 +11,9 @@ var config = {
         meterWidth: 12, // Width of Meters (in pixels) for the Visualizer
         meterGap: 12, // Gap Between Meters
         caps: false, // Add caps to the tops of the visualizer, which slowly fall down when music gets quieter
-        capColor: '#ffffff',
+        capColor: '#ffffff70',
         capHeight: 2, // Height of the caps (in pixels)
-        meterAlign: "center", // Where to align the meters. Can either be "bottom" or "center".
+        //meterAlign: "center", // Where to align the meters. Can either be "bottom" or "center".
     },
     background: {
         type: 'albumblur', // Type of background to use (video, image, none)
@@ -26,7 +26,6 @@ var config = {
         trackColor: '',
         artistColor: '',
         albumColor: '',
-        albumArtCornerRadius: 24,
         albumArtRotation: '0', // Rotation (in degrees) of the album art on the Y axis
         albumArtShadow: true, // Enable Album Art Shadow (MUST HAVE THE LATEST OBS TO WORK)
         detailsRotation: '0', // Rotation (in degrees) of the song details, visualizer, and progress bar.

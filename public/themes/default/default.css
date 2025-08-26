@@ -2,11 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 textarea {
     resize: none;
-}	
+}
+* {
+    box-sizing: border-box;
+}
 html, body {
     margin: 0;
     color: var(--accent-color);
     overflow: hidden;
+    --accent-color: #fff;
+    --def-start: 180deg;
+    --def-end: 0deg;
 }
 body {
     background: black;
@@ -65,7 +71,7 @@ body {
     height: 8px;
     position: absolute;
     top: 462px;
-    left: 0px; /* nice */
+    left: 0; /* nice */
     background-color: #00000040;
 }
 #progress {
@@ -75,7 +81,7 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 0%;
+    width: 0;
 }
 .metadata-itm {
     z-index: 7;
@@ -84,18 +90,18 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 32px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
 }
 #cover_art_shadow {
     width: 100%;
     height: 100%;
     border-radius: 32px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
     transform: rotateX(180deg);
     mask-image: linear-gradient(transparent 50%, rgb(0 0 0 / 50%) 100%) !important;
     position: absolute;
     top: 100%;
-    left: 0%;
+    left: 0;
     display: none;
 }
 #details_wrapper {
@@ -108,43 +114,46 @@ body {
 canvas {
     position: absolute;
     top: 94px;
-    left: 0px; /* nice */
+    left: 0; /* nice */
     z-index: 2;
     filter: drop-shadow(0 0 10px rgba(0,0,0,0.75));
 }
 #title {
     position: absolute;
     top: -38px;
-    left: 0px; /* nice */
+    left: 0; /* nice */
     font-size: 48pt;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     text-wrap: nowrap;
     color: #ffffff;
 }
 #artist {
     position: absolute;
     top: 45px;
-    left: 0px; /* nice */
+    left: 0; /* nice */
     font-weight: normal;
     font-size: 28pt;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     color: #ffffff;
 }
 #album {
     position: absolute;
     top: 92px;
-    left: 0px; /* nice */
+    left: 0; /* nice */
     font-weight: normal;
     font-size: 28pt;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     color: #ffffff;
+}
+#wrapper.showLyrics #album {
+    display: none;
 }
 #clock {
     font-size: 24pt;
     position: absolute;
     top: 431px;
     left: -2px;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     color: #ffffff;
 }
 
@@ -153,7 +162,7 @@ canvas {
     position: absolute;
     top: 431px;
     right: 2px;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     font-weight: normal;
     color: #ffffff;
 }
@@ -213,7 +222,7 @@ canvas {
 }
 #lyrics-wrapper h1 {
     font-weight: normal;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+    text-shadow: 0 0 10px rgba(0,0,0,0.75);
     margin: .5em;
     font-size: 36pt;
     opacity: .67;
@@ -233,7 +242,7 @@ canvas {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     z-index: -1;
 
     background-size: cover;
@@ -241,7 +250,8 @@ canvas {
     background-repeat: no-repeat;
     filter: blur(53px);
     transform: scale(1.15,-1.15);
-    animation: albumBlurEffects 10s ease infinite;
+    animation: albumBlurEffects 20s ease infinite;
+    aspect-ratio: 1;
 }
 @keyframes albumBlurEffects {
     0% {

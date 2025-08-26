@@ -96,9 +96,9 @@ async function pregressBar() {
     const lrcWrapWrap = document.querySelector("#lyrics-wrapper-wrapper").getBoundingClientRect();
     const lrcWrap = document.querySelector("#lyrics-wrapper");
     (async () => {
-        for (let idx = 0; idx < songLyrics.length; idx++) {
-            const itm = songLyrics[idx];
-            const elm = document.querySelector(`#lyrics-wrapper h1[data-lyric-id="${idx}"]`);
+        for (let j = 0; j < songLyrics.length; j++) {
+            const itm = songLyrics[j];
+            const elm = document.querySelector(`#lyrics-wrapper h1[data-lyric-id="${j}"]`);
             setTimeout(() => {
                 elm.classList.add("active");
                 const rect = elm.getBoundingClientRect();
@@ -109,12 +109,12 @@ async function pregressBar() {
             }, itm.timestamp);
             setTimeout(() => {
                 elm.classList.remove("active");
-            }, songLyrics[idx+1].timestamp === null ? 999999999 : songLyrics[idx+1].timestamp);
+            }, songLyrics[j+1] === undefined ? 999999999 : songLyrics[j+1].timestamp);
         }
     })();
 
     const buffer = audioBufferSourceNode.buffer;
-    proglength = buffer.duration;
+    let proglength = buffer.duration;
     let i = 0;
     function updateProgress() {
         i = i + 0.2
@@ -125,7 +125,7 @@ async function pregressBar() {
             clearInterval(scrollIntervalArtist);
             Visualizer.prototype._audioEnd();
         }
-        progtimestamp = buffer.duration;
+        let progtimestamp = buffer.duration;
         const timeLeft = progtimestamp - i;
         if (updates === 1) {
             fetch('/api/save/songdata', {
@@ -166,8 +166,13 @@ async function pregressBar() {
         }
     }
 
-    const scrollInterval = setInterval(textScroll, 10);
-    const scrollIntervalArtist = setInterval(textScrollArtist, 10);
+    let scrollInterval,
+        scrollIntervalArtist;
+
+    if (config.theme === "nemo24") {
+        scrollInterval = setInterval(textScroll, 10);
+        scrollIntervalArtist = setInterval(textScrollArtist, 10);
+    }
     const intervalId = setInterval(updateProgress, 200);
 }
 
@@ -198,19 +203,19 @@ async function getLyrics() {
     const fileName = itm.url.slice(0, itm.url.lastIndexOf('.'));
     try {
         const lrcFile = await fetch(fileName + ".lrc")
-        .then((res) => {return res.text()});
+            .then((res) => {return res.text()});
         const lrcSplit = lrcFile.split("\n");
-        for (let idx = 0; idx < lrcSplit.length; idx++) {
-            const itm = lrcSplit[idx];
+        for (let j = 0; j < lrcSplit.length; j++) {
+            const lrcSplitElement = lrcSplit[j];
             const rgx = /\[([0-9]+):([0-9]+)\.([0-9]+)\]/i;
-            const timeMatch = itm.match(rgx);
+            const timeMatch = lrcSplitElement.match(rgx);
             if (timeMatch != null) {
                 // get time and content
                 const minutes = parseInt(timeMatch[1], 10);
                 const seconds = parseFloat(timeMatch[2]);
                 const milliseconds = parseInt(timeMatch[3], 10);
                 const lrcTime = (minutes * 60 + seconds) * 1000 + (milliseconds * 10);
-                const lrcString = itm.slice(10);
+                const lrcString = lrcSplitElement.slice(10);
                 songLyrics.push({
                     "timestamp": lrcTime,
                     "value": lrcString
@@ -228,11 +233,11 @@ async function getLyrics() {
 async function renderLyrics() {
     const lyricsWrapper = document.getElementById("lyrics-wrapper");
     lyricsWrapper.innerHTML = "";
-    for (let idx = 0; idx < songLyrics.length; idx++) {
-        const itm = songLyrics[idx];
+    for (let j = 0; j < songLyrics.length; j++) {
+        const itm = songLyrics[j];
         const lrc = document.createElement("h1");
         lrc.innerText = itm.value;
-        lrc.setAttribute("data-lyric-id", idx)
+        lrc.setAttribute("data-lyric-id", j)
         lyricsWrapper.appendChild(lrc);
     }
 }
@@ -249,7 +254,7 @@ async function nextSong() {
         window.location.href = window.location.href.split("?")[0] + "?idx=" + idx + "&updates=" + updates;
     }
     advanceSlideshow();
-    await fetch('/api/advancePlaylist'); // advance dashboard playlist item
+    // await fetch('/api/advancePlaylist'); // advance dashboard playlist item
     Visualizer.file = shuffled[idx].url;
     Visualizer.status = 1;
     await getLyrics();
@@ -278,12 +283,12 @@ async function setMetadata(data) {
     }
     if (data.coverArt !== document.getElementById('cover_art').src) {
         async function doTheSameButForTheShadow() {
-            document.getElementById('cover_art_shadow').style.animation = "rotateArtShadow 1s cubic-bezier(.37,1.28,.64,1)";
+            document.getElementById('cover_art_shadow').style.animation = "rotateArtShadow 1s cubic-bezier(0.22, 1, 0.36, 1)";
             setTimeout(function(){document.getElementById('cover_art_shadow').src = `${data.coverArt}`},210);
             setTimeout(function(){document.getElementById('cover_art_shadow').style.animation = ""},1000)
         };
         await doTheSameButForTheShadow();
-        document.getElementById('cover_art').style.animation = "rotateArt 1s cubic-bezier(.37,1.28,.64,1)";
+        document.getElementById('cover_art').style.animation = "rotateArt 1s cubic-bezier(0.22, 1, 0.36, 1)";
         setTimeout(function(){document.getElementById('cover_art').src = `${data.coverArt}`},210);
         setTimeout(function(){document.getElementById('cover_art').style.animation = ""},1000)
     } else {
@@ -423,7 +428,7 @@ Visualizer.prototype = {
             });
         // preload next song into cache to reduce wait time, but do it asynchronously to allow for playback
         setTimeout(() => {fetch(shuffled[idx+1].url);})
-},
+    },
     _visualize: function(audioContext, buffer) {
         if (this.audioContext === null) {
             // reload page using the idx url parameter

@@ -80,7 +80,7 @@ app.get('/api/doirefresh', (req, res) => {
     doirefresh = false
 });
 
-var overrideIndex = -1;
+let overrideIndex = -1;
 app.get('/api/clientoverrides', (req, res) => {
     res.json({ index: overrideIndex });
     overrideIndex = -1;
@@ -88,7 +88,7 @@ app.get('/api/clientoverrides', (req, res) => {
 app.post('/api/save/jumptosong', (req, res) => {
     var data = req.body;
     sendShuffle(socket, data.idx);
-    overrideIndex = data.idx;
+    // overrideIndex = data.idx; causes a double reload
     res.json({ message: "Done" });
 });
 
@@ -158,6 +158,7 @@ app.post('/api/save/playlist', async (req, res) => {
 
 function sendShuffle(ws, idx) {
     ws.send(JSON.stringify({"reload": true, "idx": idx}))
+    overrideIndex = -1;
 }
 // websocket stuff
 app.ws(`/ws`, (ws, req) => {

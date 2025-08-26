@@ -235,7 +235,7 @@ canvas {
 #clock {
     font-size: 28pt;
     position: absolute;
-    bottom: 64px;
+    bottom: 0;
     margin: 0;
     right: 400px;
     color: #ffffff;
@@ -244,7 +244,7 @@ canvas {
 #clock_neg {
     font-size: 28pt;
     position: absolute;
-    bottom: 64px;
+    bottom: 0;
     margin: 0;
     right: 300px;
     font-weight: normal;

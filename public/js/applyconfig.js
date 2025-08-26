@@ -4,17 +4,17 @@ var newConfig = {
     capStyle: "",
 }
 
-newConfig.capStyle = config.visualizer.caps == true ? config.visualizer.capColor : "#00000000";
+newConfig.capStyle = config.visualizer.caps === true ? config.visualizer.capColor : "#00000000";
 
-if (config.background.type == "video") {
+if (config.background.type === "video") {
     document.getElementById('wrapper').innerHTML +=`
         <video autoplay muted loop id="bg-video">
             <source src="${config.background.url}">
         </video>
     `
-} else if (config.background.type == "none") {
+} else if (config.background.type === "none") {
     document.getElementById('main').style.background = `transparent`;
-} else if (config.background.type == "slideshow" || config.background.type == "albumblur") {
+} else if (config.background.type === "slideshow" || config.background.type === "albumblur") {
     // do nothing, slideshow.js will do the rest
 } else {
     document.getElementById('main').style.backgroundImage = `url(${config.background.url})`;
@@ -22,13 +22,13 @@ if (config.background.type == "video") {
 
 document.documentElement.style.setProperty("--accent-color", config.accentColor);
 
-if (config.progressBar.glow == true) {
+if (config.progressBar.glow === true) {
     document.getElementById('progress').style.boxShadow = "0px 0px 10px 0px var(--accent-color)"
 } else {
     document.getElementById('progress').style.boxShadow = "none"
 }
 
-if (config.details.albumArtShadow == true) {
+if (config.details.albumArtShadow === true) {
     document.getElementById('cover_art_shadow').style.display = "block"
 } else {
     document.getElementById('cover_art_shadow').style.display = "none"
@@ -49,10 +49,10 @@ document.documentElement.style.setProperty("--def-end", (config.details.albumArt
 
 document.head.innerHTML +=`<link rel="stylesheet" href="themes/${config.theme}/${config.theme}.css">`;
 
-if (config.theme == 'watt') {
+if (config.theme === 'watt') {
     document.getElementById('canvas').width = 1176
 }
 
-if (config.theme == 'nemo') {
+if (config.theme === 'nemo') {
     document.getElementById('canvas').width = 1176
 }
