@@ -292,9 +292,9 @@ async function setMetadata(data) {
         rainbowDashStylesheet.href = '/css/rainbowdash.css';
         document.head.appendChild(rainbowDashStylesheet);
     } else {
-        const rainbowDashStylesheet = document.querySelector('.dash-stylesheet');
-        if (rainbowDashStylesheet) {
-            rainbowDashStylesheet.remove();
+        const rainbowDashStylesheet = document.querySelectorAll('.dash-stylesheet');
+        if (rainbowDashStylesheet[0]) {
+            rainbowDashStylesheet.forEach((e) => {e.remove()});
         }
     }
     if (data.coverArt !== document.getElementById('cover_art').src) {
