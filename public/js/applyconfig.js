@@ -1,6 +1,6 @@
 // This script applies the config that was set in config.js. DO NOT EDIT THIS, OR ELSE IT WILL BREAK.
 
-var newConfig = {
+let newConfig = {
     capStyle: "",
 }
 
@@ -47,7 +47,16 @@ document.getElementById('details_wrapper').style.transform = `rotateY(${config.d
 document.documentElement.style.setProperty("--def-start", (config.details.albumArtRotation - 180) + 'deg');
 document.documentElement.style.setProperty("--def-end", (config.details.albumArtRotation) + 'deg');
 
-document.head.innerHTML +=`<link rel="stylesheet" href="themes/${config.theme}/${config.theme}.css">`;
+// theme injecting
+let themeStyle = document.createElement('link');
+    themeStyle.setAttribute('rel','stylesheet');
+    themeStyle.setAttribute('href', `themes/${config.theme}/${config.theme}.css`);
+let themeScript = document.createElement('script');
+    themeScript.setAttribute('type','text/javascript');
+    themeScript.setAttribute('src', `themes/${config.theme}/theme.js`);
+
+document.head.appendChild(themeStyle);
+document.head.appendChild(themeScript);
 
 if (config.theme === 'watt') {
     document.getElementById('canvas').width = 1176

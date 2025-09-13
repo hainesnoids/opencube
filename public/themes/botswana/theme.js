@@ -1,0 +1,1 @@
+openCube.setCanvasSize(320,256,12,12);

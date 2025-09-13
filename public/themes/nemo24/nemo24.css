@@ -90,7 +90,6 @@ body {
     left: 0;
     height: 100%;
     width: 0;
-    overflow: hidden;
 }
 #progress::before {
     content: "";
@@ -174,6 +173,12 @@ canvas {
     font-weight: 500;
     font-size: 20pt;
     margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.byLabel {
+    color: #ffffffb0;
+    font-weight: 600;
+    font-size: 18pt;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 #wrapper.showLyrics #album {

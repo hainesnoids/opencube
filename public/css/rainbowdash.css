@@ -1,0 +1,70 @@
+#progress {
+    position: relative;
+    background: linear-gradient(180deg,rgba(255, 29, 34, 1) 0%, rgba(255, 29, 34, 1) 20%, rgba(255, 224, 51, 1) 20%, rgba(255, 224, 51, 1) 40%, rgba(0, 255, 58, 1) 40%, rgba(0, 255, 58, 1) 60%, rgba(4, 239, 205, 1) 60%, rgba(4, 239, 205, 1) 80%, rgba(4, 104, 216, 1) 80%);
+}
+#progress::after {
+    content: '';
+    width: 53px;
+    height: 33px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%,-50%) scale(1.3);
+
+    background-image: url("rainbowdash.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    animation: keyDown 2.5s steps(1) infinite;
+}
+
+@keyframes keyDown {
+    0% {
+        background-position: 0 0;
+    }
+    6.25% {
+        background-position: 0 -33px;
+    }
+    12.5% {
+        background-position: 0 -66px;
+    }
+    18.75% {
+        background-position: 0 -99px;
+    }
+    25% {
+        background-position: 0 -132px;
+    }
+    31.25% {
+        background-position: 0 -165px;
+    }
+    37.5% {
+        background-position: 0 -198px;
+    }
+    43.75% {
+        background-position: 0 -231px;
+    }
+    50% {
+        background-position: 0 -265px;
+    }
+    56.25% {
+        background-position: 0 -297px;
+    }
+    62.5% {
+        background-position: 0 -330px;
+    }
+    68.75% {
+        background-position: 0 -363px;
+    }
+    75% {
+        background-position: 0 -396px;
+    }
+    81.25% {
+        background-position: 0 -429px;
+    }
+    87.5% {
+        background-position: 0 -462px;
+    }
+    93.75% {
+        background-position: 0 -495px;
+    }
+}

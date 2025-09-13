@@ -1,6 +1,6 @@
 var config = {
     accentColor: '#ffffff', // Player Accent Color
-    theme: 'default', // Theme to Use (default, watt, nemo, fyber, cube, benton)
+    theme: 'nemo24', // Theme to Use (default, watt, nemo, fyber, cube, benton)
     visualizer: {
         color: [ // Colors for the Visualiser (Must Have Exactly 3 Items)
             {color: '#ffffff', position: 0},

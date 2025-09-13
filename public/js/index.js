@@ -8,6 +8,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let idx = Number(urlParams.get('idx')) || 0;
 const updates = Number(urlParams.get('updates')) || 1;
+const forceDash = Number(urlParams.get('sparkle')) === 1;
 let playCheck = false;
 
 window.onload = function() {
@@ -56,18 +57,6 @@ async function wsHook() {
 }
 
 function start() {
-    if (config.theme === "nemo24") {
-        document.getElementById('canvas').width = 144;
-        document.getElementById('canvas').height = 256;
-    }
-    if (config.theme === "botswana") {
-        document.getElementById('canvas').width = 320;
-        document.getElementById('canvas').height = 256;
-        //document.getElementById('art_wrapper').appendChild(document.getElementById('canvas'));
-        config.visualizer.color[0].color = '#ffffff';
-        config.visualizer.color[1].color = '#ffffff';
-        config.visualizer.color[2].color = '#9bfaff';
-    }
     Visualizer.prototype._prepareAPI();
     Visualizer.prototype._addEventListener();
     Visualizer.prototype._start();
@@ -169,7 +158,7 @@ async function pregressBar() {
     let scrollInterval,
         scrollIntervalArtist;
 
-    if (config.theme === "nemo24") {
+    if (openCube.scrollText === true) {
         scrollInterval = setInterval(textScroll, 10);
         scrollIntervalArtist = setInterval(textScrollArtist, 10);
     }
@@ -203,7 +192,7 @@ async function getLyrics() {
     const fileName = itm.url.slice(0, itm.url.lastIndexOf('.'));
     try {
         const lrcFile = await fetch(fileName + ".lrc")
-            .then((res) => {return res.text()});
+            .then((res) => {if (!res.ok) {throw new Error()} return res.text()});
         const lrcSplit = lrcFile.split("\n");
         for (let j = 0; j < lrcSplit.length; j++) {
             const lrcSplitElement = lrcSplit[j];
@@ -225,12 +214,14 @@ async function getLyrics() {
         document.getElementById("lyrics-wrapper").style.display = "block";
         await renderLyrics();
     } catch (err) {
-        console.warn("no lyrics found." + err);
+        console.warn("No lyrics found. " + err);
+        document.querySelector("#wrapper").classList.remove("showLyrics");
         document.getElementById("lyrics-wrapper").style.display = "none";
     }
 }
 
 async function renderLyrics() {
+    document.querySelector("#wrapper").classList.add("showLyrics");
     const lyricsWrapper = document.getElementById("lyrics-wrapper");
     lyricsWrapper.innerHTML = "";
     for (let j = 0; j < songLyrics.length; j++) {
@@ -263,12 +254,25 @@ async function nextSong() {
 }
 
 async function setMetadata(data) {
-    if (data.name.includes("[Explicit]")) {
-        document.getElementById('title').innerHTML = data.name.replaceAll('[Explicit]','') + '<span class="material-symbols-outlined" style="font-size: 32pt">explicit</span>';
+    if (openCube.strings.title === undefined) {
+        if (data.name.includes("[Explicit]")) {
+            document.getElementById('title').innerHTML = data.name.replaceAll('[Explicit]','') + '<span class="material-symbols-outlined" style="font-size: 32pt">explicit</span>';
+        } else {
+            document.getElementById('title').innerText = data.name;
+        }
     } else {
-        document.getElementById('title').innerText = data.name;
+        document.getElementById('title').innerHTML = openCube.strings.title.replaceAll('$(title)',data.name.replaceAll('[Explicit]','') + '<span class="material-symbols-outlined" style="font-size: 32pt">explicit</span>');
     }
-    document.getElementById('artist').innerText = data.artist;
+    if (openCube.strings.artist === undefined) {
+        document.getElementById('artist').innerHTML = data.artist;
+    } else {
+        document.getElementById('artist').innerHTML = openCube.strings.artist.replaceAll('$(artist)',data.artist);
+    }
+    if (openCube.strings.album === undefined) {
+        document.getElementById('album').innerHTML = data.album;
+    } else {
+        document.getElementById('album').innerHTML = openCube.strings.album.replaceAll('$(album)',data.album);
+    }
     if (config.theme === "nemo24") {
         document.getElementById('album').innerText = "Now Playing";
         const color = await new FastAverageColor().getColorAsync(`${data.coverArt}`);
@@ -281,19 +285,29 @@ async function setMetadata(data) {
     if (config.background.type === "albumblur") {
         document.getElementById('albumblur').style.backgroundImage = `url("${data.coverArt}")`;
     }
+    if (data.artist.toLowerCase().includes("vylet pony") || forceDash) { // rainbow dash progress bar
+        const rainbowDashStylesheet = document.createElement('link');
+        rainbowDashStylesheet.class = 'dash-stylesheet';
+        rainbowDashStylesheet.rel = 'stylesheet';
+        rainbowDashStylesheet.href = '/css/rainbowdash.css';
+        document.head.appendChild(rainbowDashStylesheet);
+    } else {
+        const rainbowDashStylesheet = document.querySelector('.dash-stylesheet');
+        if (rainbowDashStylesheet) {
+            rainbowDashStylesheet.remove();
+        }
+    }
     if (data.coverArt !== document.getElementById('cover_art').src) {
         async function doTheSameButForTheShadow() {
             document.getElementById('cover_art_shadow').style.animation = "rotateArtShadow 1s cubic-bezier(0.22, 1, 0.36, 1)";
             setTimeout(function(){document.getElementById('cover_art_shadow').src = `${data.coverArt}`},210);
             setTimeout(function(){document.getElementById('cover_art_shadow').style.animation = ""},1000)
-        };
+        }
         await doTheSameButForTheShadow();
         document.getElementById('cover_art').style.animation = "rotateArt 1s cubic-bezier(0.22, 1, 0.36, 1)";
         setTimeout(function(){document.getElementById('cover_art').src = `${data.coverArt}`},210);
         setTimeout(function(){document.getElementById('cover_art').style.animation = ""},1000)
     } else {
-        console.log(data.album)
-        console.log(document.getElementById('cover_art').src)
         document.getElementById('cover_art').src = `${data.coverArt}`;
     }
 }
@@ -400,8 +414,6 @@ Visualizer.prototype = {
 
         that._updateInfo('Fetching audio data', true);
 
-        console.log(url)
-
         // Fetch the audio data from the URL
         fetch(url)
             .then(response => {
@@ -479,7 +491,6 @@ Visualizer.prototype = {
         this.info = 'Playing ' + this.fileName;
         document.getElementById('fileWrapper').style.opacity = "0.2";
         this._drawSpectrum(analyser);
-        console.log(this.audioContext)
         if (this.audioContext.state === "suspended") {
             // reload page using the idx url parameter
             window.location.href = String(window.location.href).split("?")[0] + "?idx=" + idx + "&updates=" + updates;
@@ -496,7 +507,7 @@ Visualizer.prototype = {
             capHeight = config.visualizer.capHeight,
             capStyle = newConfig.capStyle,
             meterNum = cwidth / (meterWidth + gap), //count of the meters
-            capYPositionArray = []; ////store the vertical position of hte caps for the preivous frame
+            capYPositionArray = []; ////store the vertical position of hte caps for the previous frame
         let ctx = canvas.getContext('2d');
         let gradient = ctx.createLinearGradient(0, 0, 0, 300);
         gradient.addColorStop(config.visualizer.color[0].position, config.visualizer.color[0].color);
