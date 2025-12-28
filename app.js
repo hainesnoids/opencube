@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs').promises
 const bodyParser = require('body-parser');
 const {app, wsRoute} = expressWs(express())
-const PORT = 8000;
+const PORT = 80;
 
 let socket;
 
