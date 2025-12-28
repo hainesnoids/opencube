@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 .idea
+public/js/playlist.js
+public/js/playlist.json

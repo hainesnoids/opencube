@@ -8,7 +8,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let idx = Number(urlParams.get('idx')) || 0;
 const updates = Number(urlParams.get('updates')) || 1;
-const forceDash = Number(urlParams.get('sparkle')) === 1;
+const forceDash = Number(urlParams.get('sparkle')) || 0;
 let playCheck = false;
 
 window.onload = function() {
@@ -20,13 +20,14 @@ async function getAverageColor(img) {
     return fac.getColorAsync(img);
 }
 
+/*
 async function pollRefresh() {
     if (updates === 0) return
     await fetch('/api/doirefresh')
         .then(response => response.json())
         .then(data => {
             if (data.message === true) {
-                window.location.href = window.location.href.split("?")[0] + "?idx=" + 0 + "&updates=" + updates;
+                window.location.href = window.location.href.split("?")[0] + "?idx=" + 0 + "&updates=" + updates + "&sparkle=" + forceDash;
             }
         })
     await fetch('/api/clientoverrides')
@@ -38,12 +39,13 @@ async function pollRefresh() {
         })
 }
 setInterval(pollRefresh, 5000);
+ */
 
 let scrollInterval;
 let scrollIntervalArtist;
 let songCount;
 let audioBufferSourceNode;
-let websocket;
+let webSocket;
 
 async function wsHook() {
     webSocket = new WebSocket("/ws");
@@ -51,7 +53,7 @@ async function wsHook() {
     webSocket.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.reload === true) {
-            window.location.href = String(window.location.href).split("?")[0] + "?idx=" + msg.idx + "&updates=" + updates;
+            window.location.href = String(window.location.href).split("?")[0] + "?idx=" + msg.idx + "&updates=" + updates + "&sparkle=" + forceDash;
         }
     }
 }
@@ -285,17 +287,15 @@ async function setMetadata(data) {
     if (config.background.type === "albumblur") {
         document.getElementById('albumblur').style.backgroundImage = `url("${data.coverArt}")`;
     }
-    if (data.artist.toLowerCase().includes("vylet pony") || forceDash) { // rainbow dash progress bar
+    if ((data.artist.toLowerCase().includes("vylet pony") || forceDash === 1) && forceDash !== -1) { // rainbow dash progress bar
         const rainbowDashStylesheet = document.createElement('link');
-        rainbowDashStylesheet.class = 'dash-stylesheet';
+        rainbowDashStylesheet.classList.add('dash-stylesheet');
         rainbowDashStylesheet.rel = 'stylesheet';
         rainbowDashStylesheet.href = '/css/rainbowdash.css';
         document.head.appendChild(rainbowDashStylesheet);
     } else {
         const rainbowDashStylesheet = document.querySelectorAll('.dash-stylesheet');
-        if (rainbowDashStylesheet[0]) {
-            rainbowDashStylesheet.forEach((e) => {e.remove()});
-        }
+        rainbowDashStylesheet.forEach((e) => {e.remove()});
     }
     if (data.coverArt !== document.getElementById('cover_art').src) {
         async function doTheSameButForTheShadow() {
@@ -493,7 +493,7 @@ Visualizer.prototype = {
         this._drawSpectrum(analyser);
         if (this.audioContext.state === "suspended") {
             // reload page using the idx url parameter
-            window.location.href = String(window.location.href).split("?")[0] + "?idx=" + idx + "&updates=" + updates;
+            // window.location.href = String(window.location.href).split("?")[0] + "?idx=" + idx + "&updates=" + updates;
         }
     },
     _drawSpectrum: function(analyser) {
@@ -515,6 +515,7 @@ Visualizer.prototype = {
         gradient.addColorStop(config.visualizer.color[2].position, config.visualizer.color[2].color);
         const drawMeter = function () {
             let i;
+            analyser.fftSize = 4096;
             var array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
             let allCapsReachBottom;
@@ -544,8 +545,9 @@ Visualizer.prototype = {
             const step = Math.round(array.length / meterNum); //sample limited data from the total array
             ctx.clearRect(0, 0, cwidth, cheight);
             for (i = 0; i < meterNum; i++) {
-                const value = calculateLoudness(array[i * step]);
-                //var value = calculateLoudness(scaledArray[i]);
+                //const value = calculateLoudness(array[i * step]);
+                //const value = calculateLoudness(scaledArray[i]);
+                const value = array[i * step];
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
                 }
